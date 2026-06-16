@@ -65,7 +65,7 @@ function PublicSite() {
 }
 
 function App() {
-  const isAdminRoute = window.location.pathname.replace(/\/$/, '') === '/admin'
+  const isAdminRoute = window.location.hash === '#/admin' || window.location.pathname.replace(/\/$/, '') === '/admin'
   const [adminUnlocked, setAdminUnlocked] = useState(() => localStorage.getItem('harvard_admin_unlocked') === 'true')
 
   if (isAdminRoute) {

@@ -1,4 +1,6 @@
-const imagePath = (filename) => `/assets/images/${filename}`
+const base = import.meta.env.BASE_URL
+
+const imagePath = (filename) => `${base}assets/images/${filename}`
 
 export const imageMap = {
   hero: {
