@@ -1,67 +1,146 @@
-import { useEffect, useMemo, useState } from 'react'
-import { getMenu } from '../api/client'
-import { formatRand } from '../data/placeholderData'
+import { useMemo, useState } from 'react'
+import { useImages } from '../context/ImageContext'
+import { useMenu } from '../context/MenuContext'
+import { imageMap } from '../data/imageMap'
+import { formatRand } from '../data/menuStore'
+
+function menuPlaceholderForCategory(categoryId = '') {
+  const normalized = String(categoryId).toLowerCase()
+  if (normalized.includes('breakfast') || normalized.includes('toasted') || normalized.includes('kiddies')) return imageMap.menu.breakfast
+  if (normalized.includes('burger') || normalized.includes('roll') || normalized.includes('wrap') || normalized.includes('tramezzini')) return imageMap.menu.burger
+  if (normalized.includes('steak') || normalized.includes('grill') || normalized.includes('combo') || normalized.includes('chef')) return imageMap.menu.steak
+  if (normalized.includes('seafood') || normalized.includes('sushi')) return imageMap.menu.fish
+  if (normalized.includes('pizza')) return imageMap.menu.pizza
+  if (normalized.includes('hot') || normalized.includes('cold') || normalized.includes('juice') || normalized.includes('chillas')) return imageMap.menu.coffee
+  return imageMap.menu.function
+}
 
 function MenuSection({ onAddToCart }) {
-  const [categories, setCategories] = useState([])
-  const [items, setItems] = useState([])
-  const [activeCategory, setActiveCategory] = useState('all')
+  const { menuCategories, menuItems } = useMenu()
+  const { getImageForMenuItem, getAltForMenuItem } = useImages()
+  const [openCategory, setOpenCategory] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
-  useEffect(() => {
-    getMenu().then((data) => {
-      setCategories(data.categories || [])
-      setItems(data.items || [])
-    })
-  }, [])
+  const itemsByCategory = useMemo(() => {
+    return menuItems.reduce((grouped, menuItem) => {
+      const categoryItems = grouped[menuItem.category_id] || []
+      return { ...grouped, [menuItem.category_id]: [...categoryItems, menuItem] }
+    }, {})
+  }, [menuItems])
 
-  const filteredItems = useMemo(() => {
-    if (activeCategory === 'all') return items
-    return items.filter((item) => Number(item.category_id) === Number(activeCategory))
-  }, [activeCategory, items])
+  const normalizedSearch = searchTerm.trim().toLowerCase()
+  const visibleCategories = useMemo(() => {
+    if (!normalizedSearch) return menuCategories
+    return menuCategories.filter((category) =>
+      (itemsByCategory[category.id] || []).some((menuItem) =>
+        `${menuItem.name} ${menuItem.description}`.toLowerCase().includes(normalizedSearch),
+      ),
+    )
+  }, [menuCategories, itemsByCategory, normalizedSearch])
+
+  function toggleCategory(categoryId) {
+    setOpenCategory((current) => (current === categoryId ? '' : categoryId))
+  }
+
+  function categoryItems(categoryId) {
+    const categoryMenuItems = itemsByCategory[categoryId] || []
+    if (!normalizedSearch) return categoryMenuItems
+    return categoryMenuItems.filter((menuItem) =>
+      `${menuItem.name} ${menuItem.description}`.toLowerCase().includes(normalizedSearch),
+    )
+  }
 
   return (
-    <section className="section dark-band" id="menu">
+    <section className="section dark-band takeaway-menu-section" id="menu">
       <div className="section-heading">
-        <p className="eyebrow">Official menu</p>
-        <h2>Choose your flight plan.</h2>
+        <p className="eyebrow">Order Take Away</p>
+        <h2>Build your Harvard flight tray.</h2>
       </div>
-      <div className="tabs" role="tablist" aria-label="Menu categories">
-        <button className={activeCategory === 'all' ? 'active' : ''} type="button" onClick={() => setActiveCategory('all')}>
-          All
-        </button>
-        {categories.map((category) => (
-          <button
-            className={Number(activeCategory) === Number(category.id) ? 'active' : ''}
-            key={category.id}
-            type="button"
-            onClick={() => setActiveCategory(category.id)}
-          >
-            {category.name}
-          </button>
-        ))}
+
+      <label className="menu-search">
+        <span>Search takeaway menu</span>
+        <input
+          type="search"
+          placeholder="Search burgers, sushi, cappuccino..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+      </label>
+
+      <div className="takeaway-category-grid" aria-label="Takeaway categories">
+        {visibleCategories.map((category) => {
+          const count = (itemsByCategory[category.id] || []).length
+          const isOpen = openCategory === category.id
+
+          return (
+            <button
+              aria-expanded={isOpen}
+              className={isOpen ? 'takeaway-category-button active' : 'takeaway-category-button'}
+              key={category.id}
+              type="button"
+              onClick={() => toggleCategory(category.id)}
+            >
+              <span>{category.name}</span>
+              <small>{count} items</small>
+            </button>
+          )
+        })}
       </div>
-      <div className="menu-grid">
-        {filteredItems.map((item) => (
-          <article className="menu-card" key={item.id}>
-            <img src={item.image_path} alt={item.image_alt || `${item.name} menu item`} loading="lazy" />
-            <div>
-              <div className="menu-card-head">
-                <h3>{item.name}</h3>
-                <strong>{formatRand(item.price_cents)}</strong>
-              </div>
-              <p>{item.description}</p>
-              <div className="menu-card-actions">
-                <span className={item.available ? 'available' : 'unavailable'}>
-                  {item.available ? 'Available today' : 'Temporarily grounded'}
-                </span>
-                <button className="btn small" disabled={!item.available} type="button" onClick={() => onAddToCart(item)}>
-                  Add to cart
-                </button>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+
+      {visibleCategories.length === 0 && <p className="menu-empty">No menu items match that search.</p>}
+
+      {visibleCategories.map((category) => {
+        const isOpen = openCategory === category.id
+        const categoryMenuItems = categoryItems(category.id)
+
+        return (
+          <div className={isOpen ? 'takeaway-category-panel open' : 'takeaway-category-panel'} key={category.id}>
+            {isOpen && (
+              <>
+                <div className="takeaway-category-heading">
+                  <div>
+                    <h3>{category.name}</h3>
+                    <p>{category.description}</p>
+                  </div>
+                  <span>{categoryMenuItems.length} shown</span>
+                </div>
+                <div className="takeaway-item-list">
+                  {categoryMenuItems.map((menuItem) => {
+                    const fallbackImage = menuPlaceholderForCategory(menuItem.category_id)
+                    const itemImage = getImageForMenuItem(menuItem.id, fallbackImage)
+                    const itemAlt = getAltForMenuItem(menuItem.id, `${menuItem.name} menu item`)
+
+                    return (
+                      <article className={menuItem.available === false ? 'takeaway-item unavailable-item' : 'takeaway-item'} key={menuItem.id}>
+                        <img
+                          className="takeaway-item-thumb"
+                          src={itemImage}
+                          alt={itemAlt}
+                          loading="lazy"
+                        />
+                        <div>
+                          <div className="takeaway-item-title">
+                            <h4>{menuItem.name}</h4>
+                            {(menuItem.popular || menuItem.featured) && <span>Popular</span>}
+                            {menuItem.available === false && <span className="unavailable-chip">Unavailable</span>}
+                          </div>
+                          <p>{menuItem.description}</p>
+                        </div>
+                        <div className="takeaway-item-action">
+                          <strong>{formatRand(menuItem.price_cents)}</strong>
+                          <button className="btn small" disabled={menuItem.available === false} type="button" onClick={() => onAddToCart(menuItem)}>
+                            {menuItem.available === false ? 'Unavailable' : 'Add'}
+                          </button>
+                        </div>
+                      </article>
+                    )
+                  })}
+                </div>
+              </>
+            )}
+          </div>
+        )
+      })}
     </section>
   )
 }

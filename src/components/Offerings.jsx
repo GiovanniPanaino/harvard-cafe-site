@@ -1,4 +1,5 @@
 import { imageMap } from '../data/imageMap'
+import { useImages } from '../context/ImageContext'
 
 const offerings = [
   ['Breakfast', 'breakfast', 'Early plates, coffee, and weekend gathering energy.'],
@@ -10,6 +11,8 @@ const offerings = [
 ]
 
 function Offerings() {
+  const { getImageForSlot, getAltForSlot } = useImages()
+
   return (
     <section className="section" id="offerings">
       <div className="section-heading">
@@ -19,9 +22,10 @@ function Offerings() {
       <div className="feature-grid">
         {offerings.map(([title, imageKey, body]) => {
           const image = imageMap.offerings[imageKey]
+          const slotId = `offering-${imageKey}`
           return (
             <article className="feature-card image-feature-card" key={title}>
-              <img src={image.src} alt={image.alt} loading="lazy" />
+              <img src={getImageForSlot(slotId, image.src)} alt={getAltForSlot(slotId, image.alt)} loading="lazy" />
               <div>
                 <span className="feature-icon">*</span>
                 <h3>{title}</h3>

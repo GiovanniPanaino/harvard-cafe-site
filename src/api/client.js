@@ -1,4 +1,5 @@
-import { dailySpecials, menuCategories, menuItems } from '../data/placeholderData'
+import { dailySpecials } from '../data/placeholderData'
+import { getMenuData, getMenuItems } from '../data/menuStore'
 
 export const API_BASE = import.meta.env.VITE_API_BASE || '/api'
 
@@ -39,11 +40,9 @@ async function request(endpoint, options = {}) {
 }
 
 export async function getMenu() {
-  try {
-    return await request('get_menu.php')
-  } catch {
-    return { success: true, categories: menuCategories, items: menuItems }
-  }
+  // GitHub Pages demo reads localStorage first. Replace with GET /api/menu_list.php when shared backend menu storage is live.
+  const menuData = getMenuData()
+  return { success: true, categories: menuData.categories, items: menuData.items, demo: true }
 }
 
 export async function getSpecials() {
@@ -61,7 +60,7 @@ export async function submitOrder(orderData) {
     const orders = readLocal(ORDER_KEY)
     const orderId = Date.now()
     const items = (orderData.items || []).map((line, index) => {
-      const menuItem = menuItems.find((item) => Number(item.id) === Number(line.menu_item_id))
+      const menuItem = getMenuItems().find((item) => String(item.id) === String(line.menu_item_id))
       const qty = Math.max(1, Number(line.qty || 1))
       const unitPrice = menuItem?.price_cents || 0
       return {

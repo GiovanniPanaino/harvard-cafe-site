@@ -1,10 +1,13 @@
 import { imageMap } from '../data/imageMap'
+import { useImages } from '../context/ImageContext'
 
 function AirshowSection() {
+  const { getImageForSlot } = useImages()
   const items = ['Table reservations', 'Pre-orders', 'Platters', 'VIP seating', 'Special menus']
+  const airshowImage = getImageForSlot('airshow-background', imageMap.airshow.src)
 
   return (
-    <section className="section airshow-section" id="airshow" style={{ '--airshow-image': `url("${imageMap.airshow.src}")` }}>
+    <section className="section airshow-section" id="airshow" style={{ '--airshow-image': `url("${airshowImage}")` }}>
       <div>
         <p className="eyebrow">Rand Airshow / Events</p>
         <h2>Future airshow mode for high-demand days.</h2>

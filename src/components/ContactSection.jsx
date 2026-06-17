@@ -1,6 +1,9 @@
 import { imageMap } from '../data/imageMap'
+import { useImages } from '../context/ImageContext'
 
 function ContactSection() {
+  const { getImageForSlot, getAltForSlot } = useImages()
+
   return (
     <section className="section split-section" id="contact">
       <div>
@@ -15,7 +18,7 @@ function ContactSection() {
         </dl>
       </div>
       <div className="map-placeholder">
-        <img src={imageMap.contact.src} alt={imageMap.contact.alt} loading="lazy" />
+        <img src={getImageForSlot('contact-location', imageMap.contact.src)} alt={getAltForSlot('contact-location', imageMap.contact.alt)} loading="lazy" />
         <span>Map placeholder</span>
         <p>Replace with Google Maps embed after official address and consent are confirmed.</p>
       </div>

@@ -1,10 +1,15 @@
 import { imageMap } from '../data/imageMap'
+import { useImages } from '../context/ImageContext'
 
 function Hero() {
+  const { getImageForSlot, getAltForSlot } = useImages()
+  const heroSrc = getImageForSlot('hero-main-apron', imageMap.hero.src)
+  const heroAlt = getAltForSlot('hero-main-apron', imageMap.hero.alt)
+
   return (
     <section id="top" className="hero-section">
       <div className="hero-media">
-        <img src={imageMap.hero.src} alt={imageMap.hero.alt} fetchPriority="high" />
+        <img src={heroSrc} alt={heroAlt} fetchPriority="high" />
       </div>
       <div className="hero-content">
         <p className="eyebrow">Vintage aviation dining at Rand Airport</p>

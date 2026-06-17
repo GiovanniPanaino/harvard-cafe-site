@@ -3,7 +3,9 @@ import { getBookings, getFunctionEnquiries, getOrders, getSpecials } from '../ap
 import AdminPlaceholderPanel from './AdminPlaceholderPanel'
 import BookingsPanel from './BookingsPanel'
 import FunctionsPanel from './FunctionsPanel'
+import MenuManager from './MenuManager'
 import OrdersPanel from './OrdersPanel'
+import PhotoManager from './PhotoManager'
 import SpecialsPanel from './SpecialsPanel'
 
 function AdminDashboard() {
@@ -81,8 +83,8 @@ function AdminDashboard() {
         <BookingsPanel bookings={bookings} onUpdated={refresh} />
         <FunctionsPanel enquiries={functions} />
         <SpecialsPanel specials={specials} />
-        <AdminPlaceholderPanel title="Menu Manager Placeholder" body="Future CRUD for categories, items, prices, photos, and availability." />
-        <AdminPlaceholderPanel title="Gallery Manager Placeholder" body="Future upload and sorting workflow for restaurant, apron, aircraft, and event images." />
+        <MenuManager />
+        <PhotoManager />
         <AdminPlaceholderPanel title="Airshow/Event Mode Placeholder" body="Future controls for event menus, VIP seating, platters, and pre-order capacity." />
         <AdminPlaceholderPanel title="Customer Database Placeholder" body="Future customer lookup, repeat-order insights, and opt-in marketing tags." />
         <AdminPlaceholderPanel title="Reports Snapshot Placeholder" body="Future revenue, order volume, booking conversion, and special-performance summaries." />

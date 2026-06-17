@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminLogin from './admin/AdminLogin'
 import AirshowSection from './components/AirshowSection'
@@ -15,6 +15,8 @@ import HistoryTimeline from './components/HistoryTimeline'
 import MenuSection from './components/MenuSection'
 import Offerings from './components/Offerings'
 import TakeawayForm from './components/TakeawayForm'
+import { ImageProvider } from './context/ImageContext'
+import { MenuProvider } from './context/MenuContext'
 import './styles/global.css'
 
 function PublicSite() {
@@ -65,14 +67,44 @@ function PublicSite() {
 }
 
 function App() {
-  const isAdminRoute = window.location.hash === '#/admin' || window.location.pathname.replace(/\/$/, '') === '/admin'
+  const [route, setRoute] = useState(() => ({
+    hash: window.location.hash,
+    pathname: window.location.pathname.replace(/\/$/, ''),
+  }))
   const [adminUnlocked, setAdminUnlocked] = useState(() => localStorage.getItem('harvard_admin_unlocked') === 'true')
+  const isAdminRoute = route.hash === '#/admin' || route.pathname === '/admin'
+
+  useEffect(() => {
+    function syncRoute() {
+      setRoute({
+        hash: window.location.hash,
+        pathname: window.location.pathname.replace(/\/$/, ''),
+      })
+    }
+
+    window.addEventListener('hashchange', syncRoute)
+    window.addEventListener('popstate', syncRoute)
+    return () => {
+      window.removeEventListener('hashchange', syncRoute)
+      window.removeEventListener('popstate', syncRoute)
+    }
+  }, [])
 
   if (isAdminRoute) {
-    return adminUnlocked ? <AdminDashboard /> : <AdminLogin onLogin={() => setAdminUnlocked(true)} />
+    return (
+      <MenuProvider>
+        <ImageProvider>{adminUnlocked ? <AdminDashboard /> : <AdminLogin onLogin={() => setAdminUnlocked(true)} />}</ImageProvider>
+      </MenuProvider>
+    )
   }
 
-  return <PublicSite />
+  return (
+    <MenuProvider>
+      <ImageProvider>
+        <PublicSite />
+      </ImageProvider>
+    </MenuProvider>
+  )
 }
 
 export default App

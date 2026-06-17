@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import { getSpecials } from '../api/client'
+import { useImages } from '../context/ImageContext'
 import { formatRand } from '../data/placeholderData'
+
+const specialSlotIds = ['special-breakfast', 'special-burger', 'special-steak', 'special-family']
 
 function DailySpecials() {
   const [specials, setSpecials] = useState([])
+  const { getImageForSlot, getAltForSlot } = useImages()
 
   useEffect(() => {
     getSpecials().then((data) => setSpecials(data.specials || []))
@@ -18,7 +22,11 @@ function DailySpecials() {
       <div className="specials-board">
         {specials.slice(0, 5).map((special, index) => (
           <article key={special.id}>
-            <img src={special.image_path} alt={special.image_alt || `${special.title} special`} loading="lazy" />
+            <img
+              src={getImageForSlot(specialSlotIds[index], special.image_path)}
+              alt={getAltForSlot(specialSlotIds[index], special.image_alt || `${special.title} special`)}
+              loading="lazy"
+            />
             <span>{String(index + 1).padStart(2, '0')}</span>
             <div>
               <h3>{special.title}</h3>

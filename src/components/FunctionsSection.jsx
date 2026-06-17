@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { submitFunctionEnquiry } from '../api/client'
+import { useImages } from '../context/ImageContext'
 import { imageMap } from '../data/imageMap'
 
 const functionTypes = ['Birthdays', 'Corporate Events', 'Aviation Clubs', 'Biker Breakfasts', 'Car Clubs', 'Year-End Functions', 'Private Events']
 
 function FunctionsSection() {
+  const { getImageForSlot, getAltForSlot } = useImages()
   const [message, setMessage] = useState('')
   const [form, setForm] = useState({
     customer_name: '',
@@ -42,7 +44,7 @@ function FunctionsSection() {
           {functionTypes.map((type) => <span key={type}>{type}</span>)}
         </div>
         <figure className="section-image-card">
-          <img src={imageMap.functions.src} alt={imageMap.functions.alt} loading="lazy" />
+          <img src={getImageForSlot('functions-main', imageMap.functions.src)} alt={getAltForSlot('functions-main', imageMap.functions.alt)} loading="lazy" />
         </figure>
       </div>
       <form className="form-card" onSubmit={handleSubmit}>
