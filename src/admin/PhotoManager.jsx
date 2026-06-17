@@ -6,6 +6,7 @@ import { formatRand } from '../data/menuStore'
 import { prepareImageFile } from '../services/imageStore'
 
 const filterOptions = ['All', 'Website placeholders', 'Menu item photos', 'Hero', 'Food', 'Functions', 'History', 'Gallery', 'Contact', 'Aircraft']
+const sectionOrder = ['Hero', 'Food', 'Menu Items', 'Gallery', 'Functions', 'History', 'Contact', 'Aircraft']
 
 function UploadControl({ targetType, targetId, defaultAlt, onSave }) {
   const [altText, setAltText] = useState(defaultAlt || '')
@@ -56,6 +57,7 @@ function PhotoManager() {
   } = useImages()
   const [searchTerm, setSearchTerm] = useState('')
   const [filter, setFilter] = useState('All')
+  const [openGroups, setOpenGroups] = useState(() => ({ Hero: true, Food: true, 'Menu Items': true }))
 
   const categoryNameById = useMemo(() => {
     return menuCategories.reduce((lookup, category) => ({ ...lookup, [category.id]: category.name }), {})
@@ -74,6 +76,25 @@ function PhotoManager() {
     const matchesFilter = filter === 'All' || filter === 'Menu item photos' || filter === 'Food'
     return matchesSearch && matchesFilter && filter !== 'Website placeholders'
   })
+
+  const groupedSlots = useMemo(() => {
+    return filteredSlots.reduce((groups, slot) => {
+      const group = groups[slot.section] || []
+      return { ...groups, [slot.section]: [...group, slot] }
+    }, {})
+  }, [filteredSlots])
+
+  const groupedMenuItems = useMemo(() => {
+    return filteredMenuItems.reduce((groups, menuItem) => {
+      const categoryName = categoryNameById[menuItem.category_id] || 'Menu Items'
+      const group = groups[categoryName] || []
+      return { ...groups, [categoryName]: [...group, menuItem] }
+    }, {})
+  }, [categoryNameById, filteredMenuItems])
+
+  function toggleGroup(groupName) {
+    setOpenGroups((current) => ({ ...current, [groupName]: !current[groupName] }))
+  }
 
   function resetAll() {
     if (window.confirm('Reset all uploaded image assignments in this browser?')) {
@@ -115,34 +136,45 @@ function PhotoManager() {
             <h3>Website Placeholder Slots</h3>
             <span>{filteredSlots.length}</span>
           </div>
-          <div className="photo-manager-grid">
-            {filteredSlots.map((slot) => {
-              const assigned = assignments.placeholders[slot.id]
-              return (
-                <article className="photo-slot-card" key={slot.id}>
-                  <img className="photo-slot-preview" src={assigned?.dataUrl || slot.defaultImage} alt={assigned?.altText || slot.defaultAlt} loading="lazy" />
-                  <div>
-                    <div className="photo-card-title">
-                      <strong>{slot.label}</strong>
-                      <span className={assigned ? 'image-status-badge custom' : 'image-status-badge'}>{assigned ? 'Custom photo' : 'Placeholder'}</span>
-                    </div>
-                    <p>{slot.description}</p>
-                    <small>{slot.section} - {slot.recommendedUse} - {slot.targetSize}</small>
-                    <div className="photo-actions">
-                      <UploadControl
-                        defaultAlt={assigned?.altText || slot.defaultAlt}
-                        targetId={slot.id}
-                        targetType="placeholder"
-                        onSave={(imageData) => assignImageToSlot(slot.id, imageData)}
-                      />
-                      <button className="image-reset-button compact-button" type="button" onClick={() => removeSlotImage(slot.id)}>
-                        Reset Slot
-                      </button>
-                    </div>
+          <div className="manager-accordion">
+            {sectionOrder.filter((section) => groupedSlots[section]?.length).map((section) => (
+              <div className="photo-manager-group" key={section}>
+                <button className="manager-accordion-toggle" type="button" onClick={() => toggleGroup(section)}>
+                  <span>{section}</span>
+                  <small>{groupedSlots[section].length}</small>
+                </button>
+                {openGroups[section] !== false && (
+                  <div className="photo-manager-list">
+                    {groupedSlots[section].map((slot) => {
+                      const assigned = assignments.placeholders[slot.id]
+                      return (
+                        <article className="photo-manager-row" key={slot.id}>
+                          <img className="photo-slot-preview" src={assigned?.dataUrl || slot.defaultImage} alt={assigned?.altText || slot.defaultAlt} loading="lazy" />
+                          <div className="photo-row-main">
+                            <div className="photo-card-title">
+                              <strong>{slot.label}</strong>
+                              <span className={assigned ? 'image-status-badge custom' : 'image-status-badge'}>{assigned ? 'Custom photo' : 'Placeholder'}</span>
+                            </div>
+                            <p>{slot.section} · Placeholder Slot · {slot.targetSize}</p>
+                          </div>
+                          <div className="photo-actions">
+                            <UploadControl
+                              defaultAlt={assigned?.altText || slot.defaultAlt}
+                              targetId={slot.id}
+                              targetType="placeholder"
+                              onSave={(imageData) => assignImageToSlot(slot.id, imageData)}
+                            />
+                            <button className="image-reset-button compact-button" type="button" onClick={() => removeSlotImage(slot.id)}>
+                              Reset
+                            </button>
+                          </div>
+                        </article>
+                      )
+                    })}
                   </div>
-                </article>
-              )
-            })}
+                )}
+              </div>
+            ))}
           </div>
         </>
       )}
@@ -153,36 +185,47 @@ function PhotoManager() {
             <h3>Menu Item Photos</h3>
             <span>{filteredMenuItems.length}</span>
           </div>
-          <div className="photo-manager-grid">
-            {filteredMenuItems.map((menuItem) => {
-              const assigned = assignments.menuItems[menuItem.id]
-              return (
-                <article className="menu-photo-card" key={menuItem.id}>
-                  <div className="photo-slot-preview empty-preview">
-                    {assigned ? <img src={assigned.dataUrl} alt={assigned.altText || `${menuItem.name} menu item`} loading="lazy" /> : <span>No photo</span>}
+          <div className="manager-accordion">
+            {Object.keys(groupedMenuItems).map((categoryName) => (
+              <div className="photo-manager-group" key={categoryName}>
+                <button className="manager-accordion-toggle" type="button" onClick={() => toggleGroup(categoryName)}>
+                  <span>{categoryName}</span>
+                  <small>{groupedMenuItems[categoryName].length}</small>
+                </button>
+                {openGroups[categoryName] !== false && (
+                  <div className="photo-manager-list">
+                    {groupedMenuItems[categoryName].map((menuItem) => {
+                      const assigned = assignments.menuItems[menuItem.id]
+                      return (
+                        <article className="photo-manager-row" key={menuItem.id}>
+                          <div className="photo-slot-preview empty-preview">
+                            {assigned ? <img src={assigned.dataUrl} alt={assigned.altText || `${menuItem.name} menu item`} loading="lazy" /> : <span>No photo</span>}
+                          </div>
+                          <div className="photo-row-main">
+                            <div className="photo-card-title">
+                              <strong>{menuItem.name}</strong>
+                              <span className={assigned ? 'image-status-badge custom' : 'image-status-badge'}>{assigned ? 'Custom meal photo' : 'No photo'}</span>
+                            </div>
+                            <p>{categoryName} · Menu Item · {formatRand(menuItem.price_cents)}</p>
+                          </div>
+                          <div className="photo-actions">
+                            <UploadControl
+                              defaultAlt={assigned?.altText || `${menuItem.name} menu item`}
+                              targetId={menuItem.id}
+                              targetType="menuItem"
+                              onSave={(imageData) => assignImageToMenuItem(menuItem.id, imageData)}
+                            />
+                            <button className="image-reset-button compact-button" type="button" onClick={() => removeMenuItemImage(menuItem.id)}>
+                              Remove
+                            </button>
+                          </div>
+                        </article>
+                      )
+                    })}
                   </div>
-                  <div>
-                    <div className="photo-card-title">
-                      <strong>{menuItem.name}</strong>
-                      <span className={assigned ? 'image-status-badge custom' : 'image-status-badge'}>{assigned ? 'Custom meal photo' : 'No meal photo'}</span>
-                    </div>
-                    <p>{categoryNameById[menuItem.category_id] || menuItem.category_id} - {formatRand(menuItem.price_cents)}</p>
-                    <small>{menuItem.description || 'No description'}</small>
-                    <div className="photo-actions">
-                      <UploadControl
-                        defaultAlt={assigned?.altText || `${menuItem.name} menu item`}
-                        targetId={menuItem.id}
-                        targetType="menuItem"
-                        onSave={(imageData) => assignImageToMenuItem(menuItem.id, imageData)}
-                      />
-                      <button className="image-reset-button compact-button" type="button" onClick={() => removeMenuItemImage(menuItem.id)}>
-                        Remove Photo
-                      </button>
-                    </div>
-                  </div>
-                </article>
-              )
-            })}
+                )}
+              </div>
+            ))}
           </div>
         </>
       )}

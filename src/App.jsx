@@ -24,6 +24,7 @@ function PublicSite() {
   const [cartOpen, setCartOpen] = useState(false)
 
   const cartCount = useMemo(() => cart.reduce((total, item) => total + item.qty, 0), [cart])
+  const cartTotal = useMemo(() => cart.reduce((total, item) => total + item.price_cents * item.qty, 0), [cart])
 
   function addToCart(menuItem) {
     setCart((current) => {
@@ -61,6 +62,13 @@ function PublicSite() {
         <ContactSection />
       </main>
       <Footer />
+      {cartCount > 0 && (
+        <button className="mobile-cart-bar" type="button" onClick={() => setCartOpen(true)}>
+          <span>Flight Tray · {cartCount} items</span>
+          <strong>{new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(cartTotal / 100)}</strong>
+          <em>View Order</em>
+        </button>
+      )}
       <CartPanel cart={cart} isOpen={cartOpen} onClose={() => setCartOpen(false)} updateQty={updateQty} />
     </>
   )
