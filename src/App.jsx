@@ -20,6 +20,26 @@ import { MenuProvider } from './context/MenuContext'
 import './styles/global.css'
 
 function PublicSite() {
+  return (
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Offerings />
+        <DailySpecials />
+        <FunctionsSection />
+        <Gallery />
+        <BookingForm />
+        <HistoryTimeline />
+        <AirshowSection />
+        <ContactSection />
+      </main>
+      <Footer />
+    </>
+  )
+}
+
+function OrderPage() {
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
 
@@ -45,21 +65,17 @@ function PublicSite() {
     )
   }
 
+  function scrollToCheckout() {
+    setCartOpen(false)
+    document.getElementById('takeaway')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <>
-      <Header cartCount={cartCount} onOpenCart={() => setCartOpen(true)} />
-      <main>
-        <Hero />
-        <Offerings />
+      <Header cartCount={cartCount} onOpenCart={() => setCartOpen(true)} isOrderPage />
+      <main className="order-page">
         <MenuSection onAddToCart={addToCart} />
-        <DailySpecials />
-        <FunctionsSection />
-        <Gallery />
-        <BookingForm />
         <TakeawayForm cart={cart} setCart={setCart} updateQty={updateQty} />
-        <HistoryTimeline />
-        <AirshowSection />
-        <ContactSection />
       </main>
       <Footer />
       {cartCount > 0 && (
@@ -69,7 +85,7 @@ function PublicSite() {
           <em>View Order</em>
         </button>
       )}
-      <CartPanel cart={cart} isOpen={cartOpen} onClose={() => setCartOpen(false)} updateQty={updateQty} />
+      <CartPanel cart={cart} isOpen={cartOpen} onClose={() => setCartOpen(false)} updateQty={updateQty} onCheckout={scrollToCheckout} />
     </>
   )
 }
@@ -81,6 +97,7 @@ function App() {
   }))
   const [adminUnlocked, setAdminUnlocked] = useState(() => localStorage.getItem('harvard_admin_unlocked') === 'true')
   const isAdminRoute = route.hash === '#/admin' || route.pathname === '/admin'
+  const isOrderRoute = route.hash === '#/order' || route.pathname === '/order'
 
   useEffect(() => {
     function syncRoute() {
@@ -109,7 +126,7 @@ function App() {
   return (
     <MenuProvider>
       <ImageProvider>
-        <PublicSite />
+        {isOrderRoute ? <OrderPage /> : <PublicSite />}
       </ImageProvider>
     </MenuProvider>
   )

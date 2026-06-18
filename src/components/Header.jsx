@@ -1,6 +1,5 @@
-function Header({ cartCount, onOpenCart }) {
+function Header({ cartCount = 0, onOpenCart, isOrderPage = false }) {
   const links = [
-    ['Menu', '#menu'],
     ['Specials', '#specials'],
     ['Functions', '#functions'],
     ['Bookings', '#bookings'],
@@ -24,9 +23,15 @@ function Header({ cartCount, onOpenCart }) {
           </a>
         ))}
       </nav>
-      <button className="cart-button" type="button" onClick={onOpenCart}>
-        Takeaway Cart <span>{cartCount}</span>
-      </button>
+      {isOrderPage ? (
+        <button className="cart-button" type="button" onClick={onOpenCart}>
+          Takeaway Cart <span>{cartCount}</span>
+        </button>
+      ) : (
+        <a className="header-order-button" href="#/order">
+          Order Take Away
+        </a>
+      )}
     </header>
   )
 }

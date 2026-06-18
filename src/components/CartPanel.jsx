@@ -1,6 +1,6 @@
 import { formatRand } from '../data/menuStore'
 
-function CartPanel({ cart, isOpen, onClose, updateQty }) {
+function CartPanel({ cart, isOpen, onClose, updateQty, onCheckout }) {
   const subtotal = cart.reduce((total, item) => total + item.price_cents * item.qty, 0)
 
   return (
@@ -39,9 +39,9 @@ function CartPanel({ cart, isOpen, onClose, updateQty }) {
             <span>Order Tally</span>
             <strong>{formatRand(subtotal)}</strong>
           </div>
-          <a className="btn primary full" href="#takeaway" onClick={onClose}>
+          <button className="btn primary full" type="button" onClick={onCheckout || onClose}>
             Continue to order
-          </a>
+          </button>
         </>
       )}
     </aside>

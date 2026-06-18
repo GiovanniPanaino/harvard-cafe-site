@@ -19,9 +19,11 @@ function Hero() {
           South African aviation heritage.
         </p>
         <div className="hero-actions">
-          <a className="btn primary" href="#menu">View Menu</a>
+          <div className="hero-order-cta">
+            <a className="btn primary order-cta-button" href="#/order">Order Take Away</a>
+            <small>Fast mobile ordering. Restaurant confirmation required.</small>
+          </div>
           <a className="btn" href="#bookings">Book a Table</a>
-          <a className="btn" href="#takeaway">Order Takeaway</a>
           <a className="btn ghost" href="#functions">Functions</a>
         </div>
       </div>
