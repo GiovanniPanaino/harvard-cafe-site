@@ -1,7 +1,7 @@
 import { imageMap } from '../data/imageMap'
-import { useImages } from '../context/ImageContext'
+import { useImages } from '../context/useImages'
 
-function Hero() {
+function Hero({ onOpenMenu, onOpenWhatsApp }) {
   const { getImageForSlot, getAltForSlot } = useImages()
   const heroSrc = getImageForSlot('hero-main-apron', imageMap.hero.src)
   const heroAlt = getAltForSlot('hero-main-apron', imageMap.hero.alt)
@@ -11,25 +11,21 @@ function Hero() {
       <div className="hero-media">
         <img src={heroSrc} alt={heroAlt} fetchPriority="high" />
       </div>
-      <div className="hero-content">
-        <p className="eyebrow">Vintage aviation dining at Rand Airport</p>
-        <h1>The Harvard Cafe</h1>
+      <div className="hero-content reveal is-visible">
+        <p className="eyebrow">Rand Airport, Germiston</p>
+        <h1>Harvard Cafe</h1>
         <p className="hero-copy">
-          Where time flies over warm plates, apron views, family breakfasts, and the unmistakable mood of
-          South African aviation heritage.
+          Great food. Great views. A legendary airport atmosphere.
         </p>
         <div className="hero-actions">
-          <div className="hero-order-cta">
-            <a className="btn primary order-cta-button" href="#/order">Order Take Away</a>
-            <small>Fast mobile ordering. Restaurant confirmation required.</small>
-          </div>
-          <a className="btn" href="#bookings">Book a Table</a>
-          <a className="btn ghost" href="#functions">Functions</a>
+          <button className="btn primary order-cta-button" type="button" onClick={onOpenMenu}>View Menu</button>
+          <a className="btn" href="#contact">Find Us</a>
+          <button className="btn ghost light" type="button" onClick={onOpenWhatsApp}>WhatsApp Us</button>
         </div>
       </div>
       <div className="terminal-strip" aria-label="Today at The Harvard Cafe">
-        <span>Ready for Takeoff</span>
-        <span>Apron Seating</span>
+        <span>Airport Views</span>
+        <span>Warm Cafe Dining</span>
         <span>Family Friendly</span>
       </div>
     </section>

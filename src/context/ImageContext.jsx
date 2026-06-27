@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
   assignImageToMenuItem as assignStoredImageToMenuItem,
   assignImageToSlot as assignStoredImageToSlot,
@@ -7,27 +7,26 @@ import {
   removeSlotImage as removeStoredSlotImage,
   resetAllImages as resetStoredImages,
 } from '../services/imageStore'
-
-const ImageContext = createContext(null)
+import { ImageContext } from './imageContextValue'
 
 export function ImageProvider({ children }) {
   const [assignments, setAssignments] = useState(() => getImageAssignments())
 
-  function getImageForSlot(slotId, fallbackImage) {
+  const getImageForSlot = useCallback((slotId, fallbackImage) => {
     return assignments.placeholders[slotId]?.dataUrl || fallbackImage
-  }
+  }, [assignments.placeholders])
 
-  function getAltForSlot(slotId, fallbackAlt) {
+  const getAltForSlot = useCallback((slotId, fallbackAlt) => {
     return assignments.placeholders[slotId]?.altText || fallbackAlt
-  }
+  }, [assignments.placeholders])
 
-  function getImageForMenuItem(menuItemId, fallbackImage = '') {
+  const getImageForMenuItem = useCallback((menuItemId, fallbackImage = '') => {
     return assignments.menuItems[menuItemId]?.dataUrl || fallbackImage
-  }
+  }, [assignments.menuItems])
 
-  function getAltForMenuItem(menuItemId, fallbackAlt = '') {
+  const getAltForMenuItem = useCallback((menuItemId, fallbackAlt = '') => {
     return assignments.menuItems[menuItemId]?.altText || fallbackAlt
-  }
+  }, [assignments.menuItems])
 
   function assignImageToSlot(slotId, imageData) {
     const saved = assignStoredImageToSlot(slotId, imageData)
@@ -72,14 +71,14 @@ export function ImageProvider({ children }) {
       removeMenuItemImage,
       resetAllImages,
     }),
-    [assignments],
+    [
+      assignments,
+      getImageForSlot,
+      getAltForSlot,
+      getImageForMenuItem,
+      getAltForMenuItem,
+    ],
   )
 
   return <ImageContext.Provider value={value}>{children}</ImageContext.Provider>
-}
-
-export function useImages() {
-  const context = useContext(ImageContext)
-  if (!context) throw new Error('useImages must be used inside ImageProvider')
-  return context
 }

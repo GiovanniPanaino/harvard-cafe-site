@@ -1,9 +1,9 @@
-function Header({ cartCount = 0, onOpenCart, isOrderPage = false }) {
+function Header({ onOpenWhatsApp }) {
   const links = [
-    ['Specials', '#specials'],
+    ['Experience', '#experience'],
+    ['Menu', '#menu-preview'],
     ['Functions', '#functions'],
-    ['Bookings', '#bookings'],
-    ['History', '#history'],
+    ['Gallery', '#gallery'],
     ['Contact', '#contact'],
   ]
 
@@ -12,7 +12,7 @@ function Header({ cartCount = 0, onOpenCart, isOrderPage = false }) {
       <a className="brand" href="#top" aria-label="The Harvard Cafe home">
         <span className="brand-mark">HC</span>
         <span>
-          <strong>The Harvard Cafe</strong>
+          <strong>Harvard Cafe</strong>
           <small>Rand Airport, Germiston</small>
         </span>
       </a>
@@ -23,15 +23,9 @@ function Header({ cartCount = 0, onOpenCart, isOrderPage = false }) {
           </a>
         ))}
       </nav>
-      {isOrderPage ? (
-        <button className="cart-button" type="button" onClick={onOpenCart}>
-          Takeaway Cart <span>{cartCount}</span>
-        </button>
-      ) : (
-        <a className="header-order-button" href="#/order">
-          Order Take Away
-        </a>
-      )}
+      <button className="header-order-button" type="button" onClick={onOpenWhatsApp}>
+        WhatsApp Us
+      </button>
     </header>
   )
 }
