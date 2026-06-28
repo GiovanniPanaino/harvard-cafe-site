@@ -22,6 +22,7 @@
 body {
   min-width: 320px;
   margin: 0;
+  overflow-x: hidden;
   background:
     linear-gradient(90deg, rgba(16, 25, 35, 0.035) 1px, transparent 1px) 0 0 / 48px 48px,
     var(--cream);
@@ -79,11 +80,11 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 20;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 18px;
-  padding: 14px clamp(16px, 4vw, 56px);
+  padding: 12px clamp(16px, 4vw, 56px);
   color: var(--paper);
   background: rgba(16, 25, 35, 0.94);
   border-bottom: 1px solid rgba(217, 179, 106, 0.25);
@@ -94,7 +95,6 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-width: 210px;
   text-decoration: none;
 }
 
@@ -121,7 +121,7 @@ h3 {
 .main-nav {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 18px;
   font-size: 0.92rem;
 }
@@ -131,8 +131,28 @@ h3 {
   text-decoration: none;
 }
 
-.btn,
-.header-order-button {
+.nav-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(217, 179, 106, 0.35);
+  border-radius: 6px;
+  background: rgba(255, 248, 234, 0.06);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--brass-light);
+}
+
+.nav-toggle span + span {
+  margin-top: 5px;
+}
+
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -153,14 +173,12 @@ h3 {
   cursor: pointer;
 }
 
-.btn:hover,
-.header-order-button:hover {
+.btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 18px 42px rgba(7, 11, 15, 0.14);
 }
 
-.btn.primary,
-.header-order-button {
+.btn.primary {
   color: #18140e;
   background: linear-gradient(135deg, var(--brass-light), var(--brass));
 }
@@ -746,44 +764,66 @@ textarea {
 }
 
 .site-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 24px clamp(18px, 5vw, 72px);
+  display: grid;
+  grid-template-columns: minmax(240px, 1.4fr) minmax(180px, 0.8fr) minmax(160px, 0.7fr);
+  gap: clamp(28px, 5vw, 70px);
+  padding: clamp(44px, 6vw, 72px) clamp(18px, 5vw, 72px);
   color: rgba(255, 248, 234, 0.74);
-  background: var(--navy);
+  background:
+    linear-gradient(180deg, rgba(217, 179, 106, 0.06), transparent),
+    var(--navy);
 }
 
-.site-footer p {
-  margin: 0;
+.footer-column {
+  display: grid;
+  align-content: start;
+  gap: 10px;
 }
 
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: flex-end;
-}
-
-.footer-links a {
-  color: var(--brass-light);
+.footer-title,
+.footer-heading {
+  color: var(--paper);
   font-weight: 900;
+}
+
+.footer-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.footer-heading {
+  color: var(--brass-light);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.footer-brand p {
+  max-width: 420px;
+  margin: 0;
+  line-height: 1.7;
+}
+
+.footer-column a {
+  color: var(--brass-light);
+  font-weight: 800;
   text-decoration: none;
 }
 
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 700ms ease var(--stagger, 0ms), transform 700ms ease var(--stagger, 0ms);
+  transform: translateY(24px);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0ms),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0ms);
 }
 
 .reveal.from-left {
-  transform: translateX(-34px);
+  transform: translateX(-24px);
 }
 
 .reveal.from-right {
-  transform: translateX(34px);
+  transform: translateX(24px);
 }
 
 .reveal.is-visible {
@@ -801,7 +841,6 @@ textarea {
   .booking-card,
   .gallery-grid img,
   .btn,
-  .header-order-button,
   .contact-card {
     transition: none;
   }
@@ -809,15 +848,51 @@ textarea {
 
 @media (max-width: 980px) {
   .site-header {
-    align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand strong {
+    line-height: 1.1;
+  }
+
+  .brand small {
+    font-size: 0.72rem;
+  }
+
+  .nav-toggle {
+    display: grid;
+    justify-self: end;
   }
 
   .main-nav {
+    grid-column: 1 / -1;
+    display: none;
     width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 6px;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 8px 0 2px;
+  }
+
+  .site-header.nav-open .main-nav {
+    display: grid;
+  }
+
+  .main-nav a {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
   }
 
   .home-page .section {
@@ -858,10 +933,6 @@ textarea {
 
   .site-header {
     gap: 12px;
-  }
-
-  .header-order-button {
-    width: 100%;
   }
 
   .hero-content {
@@ -932,11 +1003,9 @@ textarea {
   }
 
   .site-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer-links {
-    justify-content: flex-start;
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding-top: 42px;
+    padding-bottom: 42px;
   }
 }

@@ -41,7 +41,7 @@ function PublicSite() {
 
   return (
     <>
-      <Header onOpenWhatsApp={() => openMessageModal('whatsapp')} />
+      <Header />
       <main className="home-page">
         <Hero onOpenMenu={() => setMenuOpen(true)} onOpenWhatsApp={() => openMessageModal('whatsapp')} />
         <ExperienceSection />
