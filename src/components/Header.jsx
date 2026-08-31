@@ -10,11 +10,14 @@ function Header({ cartCount, onOpenCart }) {
 
   return (
     <header className="site-header">
-      <a className="brand" href="#top" aria-label="The Harvard Cafe home">
-        <span className="brand-mark">HC</span>
-        <span>
+      <a className="brand" href="#/" aria-label="The Harvard Cafe home">
+        <span className="brand-logo-slot">
+          {/* Future logo banner: <img src="/assets/images/harvard-logo-banner.webp" alt="The Harvard Cafe - Where time flies" /> */}
+          <span className="brand-mark">HC</span>
+        </span>
+        <span className="brand-copy">
           <strong>The Harvard Cafe</strong>
-          <small>Rand Airport, Germiston</small>
+          <small>Where time flies</small>
         </span>
       </a>
       <nav className="main-nav" aria-label="Main navigation">
@@ -24,9 +27,12 @@ function Header({ cartCount, onOpenCart }) {
           </a>
         ))}
       </nav>
-      <button className="cart-button" type="button" onClick={onOpenCart}>
-        Takeaway Cart <span>{cartCount}</span>
-      </button>
+      <div className="header-actions">
+        <a className="btn btn-primary order-nav-button" href="#/order">Order Take Away</a>
+        <button className="cart-button" type="button" onClick={onOpenCart}>
+          Cart <span>{cartCount}</span>
+        </button>
+      </div>
     </header>
   )
 }

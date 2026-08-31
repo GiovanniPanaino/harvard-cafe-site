@@ -14,10 +14,10 @@ function Hero() {
           South African aviation heritage.
         </p>
         <div className="hero-actions">
-          <a className="btn primary" href="#menu">View Menu</a>
-          <a className="btn" href="#bookings">Book a Table</a>
-          <a className="btn" href="#takeaway">Order Takeaway</a>
-          <a className="btn ghost" href="#functions">Functions</a>
+          <a className="btn btn-primary" href="#/order">Order Take Away</a>
+          <a className="btn btn-secondary" href="#menu">View Menu</a>
+          <a className="btn btn-outline" href="#bookings">Book a Table</a>
+          <a className="btn btn-ghost" href="#functions">Functions</a>
         </div>
       </div>
       <div className="terminal-strip" aria-label="Today at The Harvard Cafe">

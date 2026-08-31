@@ -30,7 +30,7 @@ function CartPanel({ cart, isOpen, onClose, updateQty }) {
             <span>Subtotal</span>
             <strong>{formatRand(subtotal)}</strong>
           </div>
-          <a className="btn primary full" href="#takeaway" onClick={onClose}>
+          <a className="btn primary full" href="#/order" onClick={onClose}>
             Continue to order
           </a>
         </>

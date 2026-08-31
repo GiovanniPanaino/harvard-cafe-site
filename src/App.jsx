@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminLogin from './admin/AdminLogin'
 import AirshowSection from './components/AirshowSection'
@@ -17,7 +17,19 @@ import Offerings from './components/Offerings'
 import TakeawayForm from './components/TakeawayForm'
 import './styles/global.css'
 
-function PublicSite() {
+function useHashRoute() {
+  const [route, setRoute] = useState(() => window.location.hash || '#/')
+
+  useEffect(() => {
+    const onHashChange = () => setRoute(window.location.hash || '#/')
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  })
+
+  return route
+}
+
+function PublicSite({ orderOnly = false }) {
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
 
@@ -42,6 +54,14 @@ function PublicSite() {
     )
   }
 
+  if (orderOnly) {
+    return (
+      <main className="order-page">
+        <TakeawayForm cart={cart} setCart={setCart} updateQty={updateQty} standalone />
+      </main>
+    )
+  }
+
   return (
     <>
       <Header cartCount={cartCount} onOpenCart={() => setCartOpen(true)} />
@@ -53,7 +73,14 @@ function PublicSite() {
         <FunctionsSection />
         <Gallery />
         <BookingForm />
-        <TakeawayForm cart={cart} setCart={setCart} updateQty={updateQty} />
+        <section className="section takeaway-cta" id="takeaway">
+          <div>
+            <p className="eyebrow">Order Take Away</p>
+            <h2>Ready when you land.</h2>
+            <p>Build a quick collection order on the mobile-first order page.</p>
+          </div>
+          <a className="btn btn-primary order-hero-link" href="#/order">Order Take Away</a>
+        </section>
         <HistoryTimeline />
         <AirshowSection />
         <ContactSection />
@@ -65,11 +92,16 @@ function PublicSite() {
 }
 
 function App() {
-  const isAdminRoute = window.location.pathname.replace(/\/$/, '') === '/admin'
+  const route = useHashRoute()
+  const isAdminRoute = window.location.pathname.replace(/\/$/, '') === '/admin' || route === '#/admin'
   const [adminUnlocked, setAdminUnlocked] = useState(() => localStorage.getItem('harvard_admin_unlocked') === 'true')
 
   if (isAdminRoute) {
     return adminUnlocked ? <AdminDashboard /> : <AdminLogin onLogin={() => setAdminUnlocked(true)} />
+  }
+
+  if (route === '#/order') {
+    return <PublicSite orderOnly />
   }
 
   return <PublicSite />
