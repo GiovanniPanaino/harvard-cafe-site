@@ -26,9 +26,7 @@ function OrdersPanel({ orders, onUpdated }) {
               <h3>{order.order_number || `Order #${order.id}`}</h3>
               <p>
                 <strong>{order.customer_name}</strong> -{' '}
-                <a href={`https://wa.me/${String(order.customer_phone).replace(/\D/g, '')}`} target="_blank" rel="noreferrer">
-                  Open WhatsApp
-                </a>
+                <a href={`tel:${String(order.customer_phone).replace(/\D/g, '')}`}>Call customer</a>
               </p>
               <p>
                 Phone: {order.customer_phone} - Collection: {order.collection_time || 'not set'} -{' '}

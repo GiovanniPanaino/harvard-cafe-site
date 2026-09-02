@@ -1,17 +1,23 @@
 import { imageMap } from '../data/imageMap'
+import { contactDetails } from '../data/contact'
 
 function AirshowSection() {
-  const items = ['Table reservations', 'Pre-orders', 'Platters', 'VIP seating', 'Special menus']
+  const items = ['Airshow Mode', 'Early Bookings', 'Apron Atmosphere', 'Menu Access']
 
   return (
-    <section className="section airshow-section" id="airshow" style={{ '--airshow-image': `url("${imageMap.airshow.src}")` }}>
+    <section className="section airshow-section reveal-on-scroll reveal-right" id="airshow" style={{ '--airshow-image': `url("${imageMap.airshow.src}")` }}>
       <div>
-        <p className="eyebrow">Rand Airshow / Events</p>
-        <h2>Future airshow mode for high-demand days.</h2>
+        <p className="eyebrow">Rand Airport Airshow</p>
+        <h2>Book early. View the menu. Join us on the apron.</h2>
         <p>
-          This MVP leaves a clear runway for event-day revenue: timed table bookings, pre-orders,
-          group platters, VIP seating requests, and special menus.
+          Airshow days are made for early bookings, good food and a front-row seat to the atmosphere
+          at Rand Airport.
         </p>
+        <div className="section-actions">
+          <a className="btn btn-primary" href="#contact">Airshow Info</a>
+          <a className="btn btn-secondary" href="#menu">View Menu</a>
+          <a className="btn btn-outline" href={contactDetails.directions} target="_blank" rel="noreferrer">Get Directions</a>
+        </div>
       </div>
       <div className="event-mode-panel">
         {items.map((item) => <span key={item}>{item}</span>)}

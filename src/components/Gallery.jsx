@@ -2,13 +2,13 @@ import { imageMap } from '../data/imageMap'
 
 function Gallery() {
   return (
-    <section className="section dark-band" id="gallery">
+    <section className="section gallery-section reveal-on-scroll reveal-up" id="gallery">
       <div className="section-heading">
         <p className="eyebrow">Gallery</p>
-        <h2>Food, aircraft, apron, atmosphere, events, and heritage.</h2>
+        <h2>A glimpse of the food, apron, aircraft and atmosphere.</h2>
       </div>
       <div className="gallery-grid">
-        {imageMap.gallery.map((item) => (
+        {imageMap.gallery.slice(0, 10).map((item) => (
           <figure key={`${item.category}-${item.src}`}>
             <img src={item.src} alt={item.alt} loading="lazy" />
             <figcaption>

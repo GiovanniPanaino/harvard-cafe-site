@@ -1,9 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminLogin from './admin/AdminLogin'
 import AirshowSection from './components/AirshowSection'
-import BookingForm from './components/BookingForm'
-import CartPanel from './components/CartPanel'
 import ContactSection from './components/ContactSection'
 import DailySpecials from './components/DailySpecials'
 import Footer from './components/Footer'
@@ -14,7 +12,8 @@ import Hero from './components/Hero'
 import HistoryTimeline from './components/HistoryTimeline'
 import MenuSection from './components/MenuSection'
 import Offerings from './components/Offerings'
-import TakeawayForm from './components/TakeawayForm'
+import { contactDetails } from './data/contact'
+import useScrollReveal from './hooks/useScrollReveal'
 import './styles/global.css'
 
 function useHashRoute() {
@@ -24,69 +23,48 @@ function useHashRoute() {
     const onHashChange = () => setRoute(window.location.hash || '#/')
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
-  })
+  }, [])
 
   return route
 }
 
-function PublicSite({ orderOnly = false }) {
-  const [cart, setCart] = useState([])
-  const [cartOpen, setCartOpen] = useState(false)
+function PublicSite({ menuOnly = false }) {
+  useScrollReveal()
 
-  const cartCount = useMemo(() => cart.reduce((total, item) => total + item.qty, 0), [cart])
-
-  function addToCart(menuItem) {
-    setCart((current) => {
-      const existing = current.find((item) => item.id === menuItem.id)
-      if (existing) {
-        return current.map((item) => (item.id === menuItem.id ? { ...item, qty: item.qty + 1 } : item))
-      }
-      return [...current, { ...menuItem, qty: 1 }]
-    })
-    setCartOpen(true)
-  }
-
-  function updateQty(itemId, qty) {
-    setCart((current) =>
-      current
-        .map((item) => (item.id === itemId ? { ...item, qty: Math.max(0, qty) } : item))
-        .filter((item) => item.qty > 0),
-    )
-  }
-
-  if (orderOnly) {
+  if (menuOnly) {
     return (
-      <main className="order-page">
-        <TakeawayForm cart={cart} setCart={setCart} updateQty={updateQty} standalone />
-      </main>
+      <>
+        <Header compact />
+        <main>
+          <MenuSection standalone />
+          <ContactSection />
+        </main>
+        <Footer />
+      </>
     )
   }
 
   return (
     <>
-      <Header cartCount={cartCount} onOpenCart={() => setCartOpen(true)} />
+      <Header />
       <main>
         <Hero />
-        <Offerings />
-        <MenuSection onAddToCart={addToCart} />
-        <DailySpecials />
-        <FunctionsSection />
-        <Gallery />
-        <BookingForm />
-        <section className="section takeaway-cta" id="takeaway">
-          <div>
-            <p className="eyebrow">Order Take Away</p>
-            <h2>Ready when you land.</h2>
-            <p>Build a quick collection order on the mobile-first order page.</p>
-          </div>
-          <a className="btn btn-primary order-hero-link" href="#/order">Order Take Away</a>
+        <section className="quick-action-strip reveal-on-scroll reveal-up" aria-label="Quick actions">
+          <a className="quick-action-button" href="#menu">View Menu</a>
+          <a className="quick-action-button" href={contactDetails.phonePrimary.href}>Call</a>
+          <a className="quick-action-button" href={contactDetails.email.href}>Email</a>
+          <a className="quick-action-button" href={contactDetails.directions} target="_blank" rel="noreferrer">Directions</a>
         </section>
-        <HistoryTimeline />
+        <Offerings />
+        <MenuSection />
+        <DailySpecials />
+        <Gallery />
+        <FunctionsSection />
         <AirshowSection />
+        <HistoryTimeline />
         <ContactSection />
       </main>
       <Footer />
-      <CartPanel cart={cart} isOpen={cartOpen} onClose={() => setCartOpen(false)} updateQty={updateQty} />
     </>
   )
 }
@@ -100,8 +78,8 @@ function App() {
     return adminUnlocked ? <AdminDashboard /> : <AdminLogin onLogin={() => setAdminUnlocked(true)} />
   }
 
-  if (route === '#/order') {
-    return <PublicSite orderOnly />
+  if (route === '#/order' || route === '#/menu') {
+    return <PublicSite menuOnly />
   }
 
   return <PublicSite />

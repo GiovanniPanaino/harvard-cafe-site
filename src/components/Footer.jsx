@@ -1,8 +1,15 @@
+import { contactDetails } from '../data/contact'
+
 function Footer() {
   return (
-    <footer className="site-footer">
-      <p>The Harvard Cafe MVP. Placeholder content and images must be replaced or verified before launch.</p>
-      <a href="/admin">Harvard Command Deck</a>
+    <footer className="site-footer reveal-on-scroll reveal-up">
+      <p>
+        Harvard Cafe at Rand Airport -{' '}
+        <a href={contactDetails.phonePrimary.href}>{contactDetails.phonePrimary.label}</a> /{' '}
+        <a href={contactDetails.phoneSecondary.href}>{contactDetails.phoneSecondary.label}</a> -{' '}
+        <a href={contactDetails.email.href}>{contactDetails.email.label}</a>
+      </p>
+      <a href="#/admin">Harvard Command Deck</a>
     </footer>
   )
 }

@@ -1,20 +1,22 @@
-function Header({ cartCount, onOpenCart }) {
+import headerBanner from '../images/banner3.png'
+import { contactDetails } from '../data/contact'
+
+function Header({ compact = false }) {
   const links = [
+    ['Home', '#/'],
     ['Menu', '#menu'],
-    ['Specials', '#specials'],
+    ['Gallery', '#gallery'],
     ['Functions', '#functions'],
-    ['Bookings', '#bookings'],
-    ['History', '#history'],
+    ['Airshow', '#airshow'],
     ['Contact', '#contact'],
   ]
 
   return (
-    <header className="site-header">
+    <header
+      className={compact ? 'site-header compact' : 'site-header'}
+      style={{ '--header-banner-image': `url(${headerBanner})` }}
+    >
       <a className="brand" href="#/" aria-label="The Harvard Cafe home">
-        <span className="brand-logo-slot">
-          {/* Future logo banner: <img src="/assets/images/harvard-logo-banner.webp" alt="The Harvard Cafe - Where time flies" /> */}
-          <span className="brand-mark">HC</span>
-        </span>
         <span className="brand-copy">
           <strong>The Harvard Cafe</strong>
           <small>Where time flies</small>
@@ -28,10 +30,8 @@ function Header({ cartCount, onOpenCart }) {
         ))}
       </nav>
       <div className="header-actions">
-        <a className="btn btn-primary order-nav-button" href="#/order">Order Take Away</a>
-        <button className="cart-button" type="button" onClick={onOpenCart}>
-          Cart <span>{cartCount}</span>
-        </button>
+        <a className="btn btn-primary" href="#menu">View Menu</a>
+        <a className="btn btn-outline header-call" href={contactDetails.phonePrimary.href}>Call Harvard Cafe</a>
       </div>
     </header>
   )

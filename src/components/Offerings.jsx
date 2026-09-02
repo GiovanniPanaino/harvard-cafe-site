@@ -1,20 +1,18 @@
 import { imageMap } from '../data/imageMap'
 
 const offerings = [
-  ['Breakfast', 'breakfast', 'Early plates, coffee, and weekend gathering energy.'],
-  ['Lunch', 'burgers', 'Burgers, grills, and relaxed apron-side favourites.'],
-  ['Drinks', 'coffee', 'Coffee, milkshakes, soft drinks, and future bar specials.'],
-  ['Family Meals', 'family', 'Easy meals for kids, groups, and long-table lunches.'],
-  ['Apron View', 'aviation', 'A restaurant experience shaped by aircraft, runway life, and open sky.'],
-  ['Events', 'functions', 'Birthdays, clubs, corporate functions, and airshow-ready service.'],
+  ['Apron-side atmosphere', 'outsideBar', 'Aircraft, open sky and Rand Airport energy.'],
+  ['Food and drinks', 'burgers', 'Breakfasts, burgers, grills, coffee and drinks.'],
+  ['Aviation heritage', 'harvardPlane', 'A bold cafe identity shaped by flight.'],
+  ['Functions and events', 'functions', 'Birthdays, clubs, corporate days and airshow visits.'],
 ]
 
 function Offerings() {
   return (
-    <section className="section" id="offerings">
+    <section className="section reveal-on-scroll reveal-up" id="offerings">
       <div className="section-heading">
-        <p className="eyebrow">Offerings and highlights</p>
-        <h2>Built around food, flight, and gathering.</h2>
+        <p className="eyebrow">Why Visit Harvard Cafe</p>
+        <h2>Food, flight and gathering in one memorable setting.</h2>
       </div>
       <div className="feature-grid">
         {offerings.map(([title, imageKey, body]) => {

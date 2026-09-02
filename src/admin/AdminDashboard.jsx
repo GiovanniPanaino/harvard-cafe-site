@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getBookings, getFunctionEnquiries, getOrders, getSpecials } from '../api/client'
+import { getBookings, getFunctionEnquiries, getSpecials } from '../api/client'
 import AdminPlaceholderPanel from './AdminPlaceholderPanel'
 import BookingsPanel from './BookingsPanel'
 import FunctionsPanel from './FunctionsPanel'
-import OrdersPanel from './OrdersPanel'
 import SpecialsPanel from './SpecialsPanel'
 
 function AdminDashboard() {
-  const [orders, setOrders] = useState([])
   const [bookings, setBookings] = useState([])
   const [functions, setFunctions] = useState([])
   const [specials, setSpecials] = useState([])
@@ -15,7 +13,6 @@ function AdminDashboard() {
   const [error, setError] = useState('')
 
   const pendingCount =
-    orders.filter((item) => item.status === 'pending').length +
     bookings.filter((item) => item.status === 'pending').length +
     functions.filter((item) => item.status === 'pending').length
 
@@ -27,13 +24,11 @@ function AdminDashboard() {
   const refresh = useCallback(async () => {
     setError('')
     try {
-      const [orderData, bookingData, functionData, specialData] = await Promise.all([
-        getOrders(),
+      const [bookingData, functionData, specialData] = await Promise.all([
         getBookings(),
         getFunctionEnquiries().catch(() => ({ enquiries: [] })),
         getSpecials(),
       ])
-      setOrders(orderData.orders || [])
       setBookings(bookingData.bookings || [])
       setFunctions(functionData.enquiries || [])
       setSpecials(specialData.specials || [])
@@ -77,15 +72,15 @@ function AdminDashboard() {
       {error && <p className="admin-error">{error}</p>}
       <p className="last-updated">Auto-refresh every 10 seconds. Last updated: {lastUpdated || 'loading'}</p>
       <div className="admin-grid">
-        <OrdersPanel orders={orders} onUpdated={refresh} />
         <BookingsPanel bookings={bookings} onUpdated={refresh} />
         <FunctionsPanel enquiries={functions} />
         <SpecialsPanel specials={specials} />
-        <AdminPlaceholderPanel title="Menu Manager Placeholder" body="Future CRUD for categories, items, prices, photos, and availability." />
-        <AdminPlaceholderPanel title="Gallery Manager Placeholder" body="Future upload and sorting workflow for restaurant, apron, aircraft, and event images." />
-        <AdminPlaceholderPanel title="Airshow/Event Mode Placeholder" body="Future controls for event menus, VIP seating, platters, and pre-order capacity." />
-        <AdminPlaceholderPanel title="Customer Database Placeholder" body="Future customer lookup, repeat-order insights, and opt-in marketing tags." />
-        <AdminPlaceholderPanel title="Reports Snapshot Placeholder" body="Future revenue, order volume, booking conversion, and special-performance summaries." />
+        {/* TODO xneelo: PHP photo upload to /uploads, persisted through /data/site-content.json with file locking and manager login. */}
+        <AdminPlaceholderPanel title="Photo / Gallery Manager" body="Future compact upload rows for hero, gallery, functions, airshow, heritage and contact image slots." />
+        {/* TODO xneelo: PDF upload/replace flow for store-level staff without cPanel access. */}
+        <AdminPlaceholderPanel title="PDF Menu Manager" body="Future menu PDF replacement for store-level staff without cPanel access." />
+        <AdminPlaceholderPanel title="Airshow Message Manager" body="Future controls for airshow banner copy, event-day contact links and featured image slot." />
+        <AdminPlaceholderPanel title="Content Links / Settings" body="Future editing for phone, email, maps, trading hours and social links." />
       </div>
     </main>
   )

@@ -16,9 +16,7 @@ function FunctionsPanel({ enquiries }) {
             <span>
               {item.function_type} - {item.guest_count} guests
             </span>
-            <a href={`https://wa.me/${String(item.customer_phone).replace(/\D/g, '')}`} target="_blank" rel="noreferrer">
-              Open WhatsApp
-            </a>
+            <a href={`tel:${String(item.customer_phone).replace(/\D/g, '')}`}>Call customer</a>
           </article>
         ))
       )}

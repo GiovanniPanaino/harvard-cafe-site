@@ -25,9 +25,7 @@ function BookingsPanel({ bookings, onUpdated }) {
             <div className="record-main">
               <h3>{booking.customer_name}</h3>
               <p>
-                <a href={`https://wa.me/${String(booking.customer_phone).replace(/\D/g, '')}`} target="_blank" rel="noreferrer">
-                  Open WhatsApp
-                </a>{' '}
+                <a href={`tel:${String(booking.customer_phone).replace(/\D/g, '')}`}>Call customer</a>{' '}
                 - Phone: {booking.customer_phone}
               </p>
               <p>
