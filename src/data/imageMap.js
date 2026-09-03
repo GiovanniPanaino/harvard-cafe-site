@@ -83,10 +83,6 @@ export const imageMap = {
     src: imagePath('rand_airport_sign_biplane.webp'),
     alt: 'Rand Airport heritage sign with biplane artwork',
   },
-  airshow: {
-    src: imagePath('saaf_harvard_trainer_7024.webp'),
-    alt: 'SAAF Harvard trainer aircraft for aviation events at Rand Airport',
-  },
   contact: {
     src: imagePath('rand_airport_control_tower_landside.webp'),
     alt: 'Rand Airport control tower exterior for The Harvard Cafe location',
@@ -156,7 +152,7 @@ export const imageMap = {
       src: imagePath('gallery-event-01.webp'),
       alt: 'Event atmosphere at The Harvard Cafe',
       title: 'Event Days',
-      category: 'Airshow',
+      category: 'Events',
     },
     {
       src: imagePath('rand_airport_foyer.webp'),

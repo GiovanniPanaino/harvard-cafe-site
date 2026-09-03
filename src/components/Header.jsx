@@ -7,7 +7,6 @@ function Header({ compact = false }) {
     ['Menu', '#menu'],
     ['Gallery', '#gallery'],
     ['Functions', '#functions'],
-    ['Airshow', '#airshow'],
     ['Contact', '#contact'],
   ]
 

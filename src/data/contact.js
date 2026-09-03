@@ -11,6 +11,12 @@ export const contactDetails = {
     label: 'randairport@cafeharvard.co.za',
     href: 'mailto:randairport@cafeharvard.co.za',
   },
+  address: 'Rand Airport, Germiston, South Africa',
+  tradingHours: [
+    { label: 'Mon to Thurs', time: '7:00 to 22:00' },
+    { label: 'Fri to Sat', time: '7:00 to 23:00' },
+    { label: 'Sun', time: '7:00 to 21:00' },
+  ],
   directions:
     'https://www.google.com/maps/search/?api=1&query=Rand%20Airport%20Germiston%20South%20Africa',
 }

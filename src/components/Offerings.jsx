@@ -4,7 +4,7 @@ const offerings = [
   ['Apron-side atmosphere', 'outsideBar', 'Aircraft, open sky and Rand Airport energy.'],
   ['Food and drinks', 'burgers', 'Breakfasts, burgers, grills, coffee and drinks.'],
   ['Aviation heritage', 'harvardPlane', 'A bold cafe identity shaped by flight.'],
-  ['Functions and events', 'functions', 'Birthdays, clubs, corporate days and airshow visits.'],
+  ['Functions and events', 'functions', 'Birthdays, clubs, corporate days and celebrations.'],
 ]
 
 function Offerings() {

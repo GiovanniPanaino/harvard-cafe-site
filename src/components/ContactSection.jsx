@@ -26,15 +26,24 @@ function ContactSection() {
             <dt>Email</dt>
             <dd><a href={contactDetails.email.href}>{contactDetails.email.label}</a></dd>
           </div>
-          <div><dt>Address</dt><dd>Placeholder: Rand Airport, Germiston, South Africa</dd></div>
-          <div><dt>Opening hours</dt><dd>Placeholder: Tue-Sun, 08:00-16:00</dd></div>
-          <div><dt>Social</dt><dd>Placeholder links for Facebook, Instagram, and Google Business</dd></div>
+          <div><dt>Address</dt><dd>{contactDetails.address}</dd></div>
+          <div>
+            <dt>Opening hours</dt>
+            <dd>
+              {contactDetails.tradingHours.map((hours) => (
+                <span className="trading-hours-row" key={hours.label}>
+                  <strong>{hours.label}</strong>
+                  <span>{hours.time}</span>
+                </span>
+              ))}
+            </dd>
+          </div>
         </dl>
       </div>
       <div className="map-placeholder">
         <img src={imageMap.contact.src} alt={imageMap.contact.alt} loading="lazy" />
         <span>Find us at Rand Airport</span>
-        <p>Rand Airport, Germiston, South Africa</p>
+        <p>{contactDetails.address}</p>
       </div>
     </section>
   )

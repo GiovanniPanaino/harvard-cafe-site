@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminLogin from './admin/AdminLogin'
-import AirshowSection from './components/AirshowSection'
 import ContactSection from './components/ContactSection'
 import DailySpecials from './components/DailySpecials'
 import Footer from './components/Footer'
@@ -60,7 +59,6 @@ function PublicSite({ menuOnly = false }) {
         <DailySpecials />
         <Gallery />
         <FunctionsSection />
-        <AirshowSection />
         <HistoryTimeline />
         <ContactSection />
       </main>

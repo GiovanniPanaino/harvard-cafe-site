@@ -44,11 +44,6 @@ export const menuSnippets = {
             description:
               '3 Egg omelettes with your choice of 2 fillings. Served with toast. Fillings: Mushrooms, ham, cheese, tomato, onion, bacon',
           },
-        ],
-      },
-      {
-        heading: 'Breakfast Continued',
-        items: [
           {
             name: 'CHEESE GRILLER BREAKFAST',
             price: 'R115',
@@ -99,6 +94,48 @@ export const menuSnippets = {
       },
     ],
   },
+  'toasted-treats': {
+    title: 'Toasted Treats',
+    sections: [
+      {
+        heading: 'Toasted Treats',
+        note: 'Served plain or toasted on brown, white or rye. Served with fries.',
+        items: [
+          { name: 'CHEESE & HAM', price: 'R74', description: '' },
+          { name: 'CHEESE, HAM & TOMATO', price: 'R78', description: '' },
+          { name: 'CHEESE & BACON', price: 'R86', description: '' },
+          { name: 'BACON & EGG', price: 'R86', description: '' },
+          { name: 'BACON, EGG & CHEESE', price: 'R94', description: '' },
+          { name: 'CHICKEN MAYONNAISE', price: 'R94', description: '' },
+          { name: 'BACON & AVO', price: 'R94', description: '' },
+          { name: 'BACON, AVO & FETA', price: 'R112', description: '' },
+          {
+            name: 'CLUB SANDWICH',
+            price: 'R127',
+            description: 'Chicken mayo, bacon, cheese, lettuce & tomato',
+          },
+        ],
+      },
+    ],
+  },
+  tramezzini: {
+    title: 'Tramezzini',
+    sections: [
+      {
+        heading: 'Tramezzini',
+        note: 'With mozzarella served with fries.',
+        items: [
+          { name: 'CHICKEN MAYONNAISE', price: 'R125', description: '' },
+          { name: 'GRILLED CHICKEN & HALLOUMI', price: 'R125', description: '' },
+          { name: 'CHICKEN PREGO', price: 'R115', description: '' },
+          { name: 'SIRLOIN PREGO', price: 'R129', description: '' },
+          { name: 'BACON, AVO & FETA', price: 'R125', description: '' },
+          { name: 'SPINACH & FETA', price: 'R125', description: '' },
+          { name: 'BACON, EGG & CHEESE', price: 'R125', description: '' },
+        ],
+      },
+    ],
+  },
   wraps: {
     title: 'Wraps',
     sections: [
@@ -130,6 +167,50 @@ export const menuSnippets = {
             name: 'SMOKED SALMON WRAP',
             price: 'R144',
             description: 'Smoked salmon with chunky cottage cheese & avo',
+          },
+        ],
+      },
+    ],
+  },
+  salads: {
+    title: 'Salads',
+    sections: [
+      {
+        heading: 'Salads',
+        items: [
+          {
+            name: 'GREEK SALAD',
+            price: 'R108',
+            description: 'Feta cheese, calamata olives, tomato, onion, green pepper, cucumber & lettuce',
+          },
+          {
+            name: 'HALLOUMI AND AVO SALAD',
+            price: 'R125',
+            description:
+              '3 Pieces of grilled or fried halloumi, served with a fresh garden salad, avo and a honey mustard sauce',
+          },
+          {
+            name: 'HARVARD SALAD',
+            price: 'R129',
+            description: 'A Greek salad topped with grilled chicken strips and pineapple',
+          },
+          {
+            name: 'THE CESSNA SALAD',
+            price: 'R129',
+            description:
+              'Grilled chicken breast topped with feta cheese, avo and peppadews. Served on a bed of fresh garden greens',
+          },
+          {
+            name: 'SMOKED CHICKEN SALAD',
+            price: 'R129',
+            description:
+              'Smoked chicken fillet, mango slices, green pepper, cucumber, red onion and tomatoes, served on a bed of fresh garden greens',
+          },
+          {
+            name: 'BLUE CHEESE SALAD',
+            price: 'R129',
+            description:
+              'Lettuce, topped with avo, cucumber, tomato, Roquefort cheese and strawberries. Served with a sweet chilli & balsamic vinegar dressing',
           },
         ],
       },
