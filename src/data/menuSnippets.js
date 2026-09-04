@@ -136,6 +136,208 @@ export const menuSnippets = {
       },
     ],
   },
+  appetizers: {
+    title: 'Appetizers',
+    sections: [
+      {
+        heading: 'Appetizers',
+        items: [
+          {
+            name: 'OYSTERS',
+            price: 'SQ',
+            description: 'Served on crushed ice with black pepper and tabasco sauce',
+          },
+          {
+            name: 'SQUID HEADS',
+            price: 'R77',
+            description: 'Squid heads, grilled or fried served with tartare sauce',
+          },
+          {
+            name: 'CHICKEN LIVER',
+            price: 'R92',
+            description:
+              'Chicken livers grilled in a spicy lemon butter sauce with a hint of paprika served with a mini bread roll',
+          },
+          {
+            name: 'CRUMBED MUSHROOMS',
+            price: 'R92',
+            description: 'Crumbed button mushrooms, served with a fresh garden salad and mayonnaise',
+          },
+          {
+            name: 'CREAMY GARLIC SNAILS',
+            price: 'R92',
+            description:
+              'Snails in a creamy garlic sauce, topped with melted mozzarella cheese and served with brown bread fingers',
+          },
+          {
+            name: 'BEEF TRINCHADO',
+            price: 'R110',
+            description: 'Tender beef strips grilled in a pan with red wine and creamy garlic, served with a mini bread roll',
+          },
+          {
+            name: 'CHICKEN TRINCHADO',
+            price: 'R95',
+            description:
+              'Chicken strips grilled in a pan with white wine, onions, green and red pepper in a creamy garlic sauce, served with a mini bread roll',
+          },
+          {
+            name: 'CALAMARI',
+            price: 'R115',
+            description: 'Tubes of calamari, grilled or fried, served with a creamy lemon butter sauce and rice',
+          },
+          {
+            name: 'GARLIC PRAWNS',
+            price: 'R125',
+            description:
+              '6 Deshelled prawns in a creamy garlic sauce, topped with melted mozzarella and served with brown bread fingers',
+          },
+          {
+            name: 'HALLOUMI & BACON',
+            price: 'R115',
+            description: '3 Pieces of fried halloumi wrapped in bacon, served on a bed of lettuce with sweet chilli sauce',
+          },
+          {
+            name: 'BUFFALO WINGS',
+            price: 'R110',
+            description: '4 wings seasoned and fried in our famous secret sauce',
+          },
+        ],
+      },
+    ],
+  },
+  combos: {
+    title: 'Combos',
+    sections: [
+      {
+        heading: 'Combos',
+        note: 'Served with your choice of fries, rice, pap, vegetables or a green salad',
+        items: [
+          {
+            name: 'RIB & PRAWN',
+            price: 'R260',
+            description: '300g Ribs & 3 medium prawns',
+          },
+          {
+            name: 'RIB & CALAMARI',
+            price: 'R260',
+            description: '300g Ribs and tubes of calamari, grilled or fried',
+          },
+          {
+            name: 'RIB & WING',
+            price: 'R280',
+            description: '300g Ribs and 4 fried buffalo wings',
+          },
+          {
+            name: 'RIB & CHICKEN',
+            price: 'R280',
+            description: '300g Ribs and 1/2 baby chicken',
+          },
+          {
+            name: 'RIB & SIRLOIN',
+            price: 'R280',
+            description: '300g Ribs and 200g sirloin steak',
+          },
+          {
+            name: 'SIRLOIN & CALAMARI',
+            price: 'R280',
+            description: '200g Sirloin steak and tubes of grilled or fried calamari',
+          },
+        ],
+      },
+    ],
+  },
+  burgers: {
+    title: 'Burgers',
+    sections: [
+      {
+        heading: 'Burgers',
+        note: 'Served with fries.',
+        items: [
+          {
+            name: 'BARON BURGER',
+            price: 'From R108.00',
+            description: '170g Beef burger, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'CESSNA BURGER',
+            price: 'From R137.70',
+            description: '150g Chicken, garnish, mayonnaise and chips',
+          },
+          {
+            name: 'CRUMBED CHICKEN BURGER',
+            price: 'From R137.70',
+            description: '150g Chicken, garnish, mayonnaise and chips',
+          },
+          {
+            name: 'SAUCY BURGER',
+            price: 'From R151.50',
+            description: '170g Beef burger, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'DAKOTA BURGER',
+            price: 'From R151.50',
+            description: '170g Beef burger, cheddar cheese, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'PREGO ROLL',
+            price: 'From R168.30',
+            description: '150g Sirloin steak, tomato, onion, prego sauce and chips',
+          },
+          {
+            name: 'BCG BURGER',
+            price: 'From R168.30',
+            description: '170g Beef burger, bacon, cheddar cheese, guacamole, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'JUNKER BURGER',
+            price: 'From R183.60',
+            description: '170g Beef burger, bacon, egg, cheddar cheese, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'RIB BURGER',
+            price: 'From R151.50',
+            description: '80g Deboned rib patty, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'THE AIRWOLF BURGER',
+            price: 'From R191.30',
+            description: '170g Beef burger, 2x bacon, 2x cheddar cheese, prego sauce and chilli. No garnish',
+          },
+          {
+            name: 'DOUBLE CHEESE BURGER',
+            price: 'From R191.30',
+            description: '2x 170g Beef burger patty, 2x cheddar cheese, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'MEGA MUSHROOM & CHEESE BURGER',
+            price: 'From R214.00',
+            description: '2x 170g Beef burger patty, grilled mushrooms, cheese sauce, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'THE HARVARD BURGER',
+            price: 'From R198.90',
+            description: '150g Fillet steak, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'DOUBLE SAUCY BURGER',
+            price: 'From R206.60',
+            description: '2x 170g Beef burger patty, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'THE AIR TRAFFIC CONTROL TOWER BURGER',
+            price: 'From R252.50',
+            description:
+              '170g Beef burger, 150g chicken, 80g deboned rib patty, bacon, egg, grilled mushrooms, cheddar cheese, garnish, 1000 island sauce and chips',
+          },
+          {
+            name: 'BANTING BURGER',
+            price: 'From R130.00',
+            description: '170g Beef burger, lettuce, onion, tomato, avocado and feta cheese',
+          },
+        ],
+      },
+    ],
+  },
   wraps: {
     title: 'Wraps',
     sections: [

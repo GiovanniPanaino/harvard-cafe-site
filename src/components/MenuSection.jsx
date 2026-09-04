@@ -1,47 +1,33 @@
 import { useEffect, useState } from 'react'
 import { imageMap } from '../data/imageMap'
-import { contactDetails } from '../data/contact'
 import { menuPreviewCategories } from '../data/menuPreview'
-import { getMenuSnippet, sampleMenuSnippet } from '../data/menuSnippets'
-
-// Future live file: public/assets/menu/harvard-cafe-menu.pdf, replaced by a manager upload flow.
-const menuPdfPath = '/assets/menu/harvard-cafe-menu.pdf'
-const menuPdfReady = false
+import { getMenuSnippet } from '../data/menuSnippets'
 
 function MenuSection({ standalone = false }) {
-  const [activeCategory, setActiveCategory] = useState(menuPreviewCategories[0].name)
-  const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
-  const selectedCategory = menuPreviewCategories.find((category) => category.name === activeCategory)
-  const selectedSnippet = getMenuSnippet(activeCategory)
-  const fallbackSnippet = selectedCategory
-    ? {
-        title: selectedCategory.name,
-        sections: [
-          {
-            heading: selectedCategory.name,
-            items: selectedCategory.items,
-          },
-        ],
-        isFallback: true,
-      }
-    : sampleMenuSnippet
-  const previewSnippet = selectedSnippet || fallbackSnippet
-  const modalSnippet = selectedSnippet || sampleMenuSnippet
+  const [activeCategoryId, setActiveCategoryId] = useState(menuPreviewCategories[0].id)
+  const [modalCategoryId, setModalCategoryId] = useState(null)
+  const selectedCategory = menuPreviewCategories.find((category) => category.id === activeCategoryId)
+  const previewSnippet = getMenuSnippet(activeCategoryId)
+  const modalSnippet = modalCategoryId ? getMenuSnippet(modalCategoryId) : null
 
   useEffect(() => {
-    if (!isMenuModalOpen) {
+    if (!modalSnippet) {
       return undefined
     }
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
-        setIsMenuModalOpen(false)
+        setModalCategoryId(null)
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isMenuModalOpen])
+  }, [modalSnippet])
+
+  function openMenuModal(categoryId = activeCategoryId) {
+    setModalCategoryId(categoryId)
+  }
 
   return (
     <>
@@ -56,11 +42,11 @@ function MenuSection({ standalone = false }) {
           <div className="menu-pill-grid" aria-label="Menu category preview">
             {menuPreviewCategories.map((category) => (
               <button
-                className={category.name === activeCategory ? 'menu-pill active' : 'menu-pill'}
-                key={category.name}
+                className={category.id === activeCategoryId ? 'menu-pill active' : 'menu-pill'}
+                key={category.id}
                 type="button"
-                aria-pressed={category.name === activeCategory}
-                onClick={() => setActiveCategory(category.name)}
+                aria-pressed={category.id === activeCategoryId}
+                onClick={() => setActiveCategoryId(category.id)}
               >
                 {category.name}
               </button>
@@ -73,29 +59,16 @@ function MenuSection({ standalone = false }) {
                 <strong>{previewSnippet.title}</strong>
               </div>
               <div className="menu-preview-scroll">
-                {selectedSnippet ? (
+                {previewSnippet ? (
                   <MenuSnippet snippet={previewSnippet} />
                 ) : (
-                  <>
-                    <p className="menu-preview-fallback">
-                      Full preview coming soon. View the PDF menu for the complete selection.
-                    </p>
-                    <MenuSnippet snippet={previewSnippet} />
-                  </>
+                  <p className="menu-preview-fallback">Menu preview coming soon.</p>
                 )}
               </div>
               <div className="menu-preview-actions">
-                <button className="btn btn-primary" type="button" onClick={() => setIsMenuModalOpen(true)}>
+                <button className="btn btn-primary" type="button" onClick={() => openMenuModal()}>
                   Open Menu Preview
                 </button>
-                {menuPdfReady ? (
-                  <>
-                    <a className="btn btn-outline" href={menuPdfPath} target="_blank" rel="noreferrer">View Full Menu PDF</a>
-                    <a className="btn btn-outline" href={menuPdfPath} download>Download Menu</a>
-                  </>
-                ) : (
-                  <a className="btn btn-outline" href={contactDetails.phonePrimary.href}>Call Harvard Cafe</a>
-                )}
               </div>
             </div>
           )}
@@ -105,20 +78,20 @@ function MenuSection({ standalone = false }) {
         </figure>
       </section>
 
-      {isMenuModalOpen ? (
+      {modalSnippet ? (
         <div
           className="menu-modal-backdrop"
           role="dialog"
           aria-modal="true"
           aria-label={`${modalSnippet.title} menu`}
-          onClick={() => setIsMenuModalOpen(false)}
+          onClick={() => setModalCategoryId(null)}
         >
           <div className="menu-modal" onClick={(event) => event.stopPropagation()}>
             <button
               className="menu-modal-close"
               type="button"
               aria-label="Close menu preview"
-              onClick={() => setIsMenuModalOpen(false)}
+              onClick={() => setModalCategoryId(null)}
             >
               &times;
             </button>
@@ -130,12 +103,6 @@ function MenuSection({ standalone = false }) {
               <div className="menu-modal-scroll">
                 <MenuSnippet snippet={modalSnippet} />
               </div>
-              {menuPdfReady ? (
-                <div className="menu-modal-actions">
-                  <a className="btn btn-primary" href={menuPdfPath} target="_blank" rel="noreferrer">View Full Menu PDF</a>
-                  <a className="btn btn-outline" href={menuPdfPath} download>Download Menu</a>
-                </div>
-              ) : null}
             </div>
           </div>
         </div>
@@ -151,6 +118,7 @@ function MenuSnippet({ snippet }) {
         <section className="menu-snippet-section" key={section.heading}>
           <h3 className="menu-snippet-heading">{section.heading}</h3>
           {section.note ? <p className="menu-snippet-note">{section.note}</p> : null}
+          {section.promo ? <p className="menu-snippet-promo">{section.promo}</p> : null}
           <div className="menu-snippet-list">
             {section.items.map((item) => (
               <article className="menu-snippet-item" key={`${section.heading}-${item.name}`}>
@@ -158,7 +126,7 @@ function MenuSnippet({ snippet }) {
                   <strong>{item.name}</strong>
                   <span className="menu-snippet-price">{item.price}</span>
                 </div>
-                <p>{item.description}</p>
+                {item.description ? <p>{item.description}</p> : null}
               </article>
             ))}
           </div>

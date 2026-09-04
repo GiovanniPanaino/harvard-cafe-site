@@ -694,6 +694,13 @@ p {
   font-weight: 900;
 }
 
+.menu-snippet-promo {
+  margin-bottom: 2px;
+  color: var(--harvard-black);
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
 .menu-snippet-item {
   display: grid;
   gap: 4px;
@@ -811,7 +818,9 @@ p {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 16px;
-  max-height: calc(88vh - 8px);
+  max-height: min(88vh, 760px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: clamp(16px, 4vw, 24px);
 }
 
@@ -835,6 +844,8 @@ p {
 .menu-modal-scroll {
   max-height: min(68vh, 620px);
   padding-right: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .menu-modal-actions {
