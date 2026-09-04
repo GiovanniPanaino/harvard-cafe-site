@@ -79,7 +79,7 @@ function MenuSection({ standalone = false }) {
               </div>
               <div className="menu-preview-scroll" ref={previewScrollRef}>
                 {previewSnippet ? (
-                  <MenuSnippet snippet={previewSnippet} />
+                  <MenuPreviewSnippet snippet={previewSnippet} />
                 ) : (
                   <p className="menu-preview-fallback">Menu preview coming soon.</p>
                 )}
@@ -130,6 +130,26 @@ function MenuSection({ standalone = false }) {
   )
 }
 
+function MenuPreviewSnippet({ snippet }) {
+  return (
+    <div className="menu-preview-list">
+      {snippet.sections.filter((section) => section.items.length > 0).map((section) => (
+        <section className="menu-preview-section" key={section.heading}>
+          <h3 className="menu-preview-section-heading">{section.heading}</h3>
+          <div className="menu-preview-rows">
+            {section.items.map((item) => (
+              <article className="menu-preview-row" key={`${section.heading}-${item.name}`}>
+                <span className="menu-preview-name">{item.name}</span>
+                <span className="menu-preview-price">{formatCompactPrice(item)}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  )
+}
+
 function MenuSnippet({ snippet }) {
   return (
     <div className="menu-modal-text">
@@ -175,6 +195,16 @@ function getPriceOptions(item) {
 
 function hasPriceOptions(item) {
   return getPriceOptions(item).length > 0
+}
+
+function formatCompactPrice(item) {
+  const priceOptions = getPriceOptions(item)
+
+  if (priceOptions.length > 0) {
+    return priceOptions.map((option) => `${option.label} ${option.price}`).join(' | ')
+  }
+
+  return item.price || ''
 }
 
 export default MenuSection
