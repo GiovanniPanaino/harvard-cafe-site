@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { imageMap } from '../data/imageMap'
 import { menuPreviewCategories } from '../data/menuPreview'
 import { getMenuSnippet } from '../data/menuSnippets'
@@ -6,9 +6,28 @@ import { getMenuSnippet } from '../data/menuSnippets'
 function MenuSection({ standalone = false }) {
   const [activeCategoryId, setActiveCategoryId] = useState(menuPreviewCategories[0].id)
   const [modalCategoryId, setModalCategoryId] = useState(null)
+  const previewScrollRef = useRef(null)
+  const modalContentRef = useRef(null)
+  const modalScrollRef = useRef(null)
   const selectedCategory = menuPreviewCategories.find((category) => category.id === activeCategoryId)
   const previewSnippet = getMenuSnippet(activeCategoryId)
   const modalSnippet = modalCategoryId ? getMenuSnippet(modalCategoryId) : null
+
+  useEffect(() => {
+    if (previewScrollRef.current) {
+      previewScrollRef.current.scrollTop = 0
+    }
+  }, [activeCategoryId])
+
+  useEffect(() => {
+    if (modalContentRef.current) {
+      modalContentRef.current.scrollTop = 0
+    }
+
+    if (modalScrollRef.current) {
+      modalScrollRef.current.scrollTop = 0
+    }
+  }, [modalCategoryId])
 
   useEffect(() => {
     if (!modalSnippet) {
@@ -58,7 +77,7 @@ function MenuSection({ standalone = false }) {
                 <span>Preview</span>
                 <strong>{previewSnippet.title}</strong>
               </div>
-              <div className="menu-preview-scroll">
+              <div className="menu-preview-scroll" ref={previewScrollRef}>
                 {previewSnippet ? (
                   <MenuSnippet snippet={previewSnippet} />
                 ) : (
@@ -95,12 +114,12 @@ function MenuSection({ standalone = false }) {
             >
               &times;
             </button>
-            <div className="menu-modal-content">
+            <div className="menu-modal-content" ref={modalContentRef}>
               <div className="menu-modal-head">
                 <span>Menu</span>
                 <h2>{modalSnippet.title}</h2>
               </div>
-              <div className="menu-modal-scroll">
+              <div className="menu-modal-scroll" ref={modalScrollRef}>
                 <MenuSnippet snippet={modalSnippet} />
               </div>
             </div>

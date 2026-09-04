@@ -1,4 +1,3 @@
-import { imageMap } from '../data/imageMap'
 import { contactDetails } from '../data/contact'
 
 function ContactSection() {
@@ -40,10 +39,14 @@ function ContactSection() {
           </div>
         </dl>
       </div>
-      <div className="map-placeholder">
-        <img src={imageMap.contact.src} alt={imageMap.contact.alt} loading="lazy" />
-        <span>Find us at Rand Airport</span>
-        <p>{contactDetails.address}</p>
+      <div className="footer-map" aria-label="Map showing Harvard Cafe at Rand Airport">
+        <iframe
+          title="Harvard Cafe Rand Airport map"
+          src="https://www.google.com/maps?q=The%20Harvard%20Cafe%20Rand%20Airport%20Germiston&output=embed"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </div>
     </section>
   )

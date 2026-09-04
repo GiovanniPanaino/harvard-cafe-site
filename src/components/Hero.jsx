@@ -15,7 +15,7 @@ function Hero() {
         </p>
         <div className="hero-actions">
           <a className="btn btn-primary" href="#menu">View Menu</a>
-          <a className="btn btn-secondary" href="#functions">Function Enquiries</a>
+          <a className="btn btn-secondary hero-functions-link" href="#functions">Function Enquiries</a>
           <a className="btn btn-outline" href={contactDetails.directions} target="_blank" rel="noreferrer">Get Directions</a>
         </div>
       </div>
