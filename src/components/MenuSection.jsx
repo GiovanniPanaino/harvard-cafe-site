@@ -71,6 +71,24 @@ function MenuSection({ standalone = false }) {
               </button>
             ))}
           </div>
+          {/* Mobile uses a dropdown because the Harvard Cafe menu contains many categories. */}
+          <div className="menu-mobile-select-wrap">
+            <label className="menu-mobile-select-label" htmlFor="menu-category-select">
+              Choose menu section
+            </label>
+            <select
+              id="menu-category-select"
+              className="menu-mobile-select"
+              value={activeCategoryId}
+              onChange={(event) => setActiveCategoryId(event.target.value)}
+            >
+              {menuPreviewCategories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
           {selectedCategory && (
             <div className="menu-preview-panel" aria-live="polite">
               <div className="menu-preview-header">

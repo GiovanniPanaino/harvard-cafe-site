@@ -28,6 +28,8 @@
 }
 
 html {
+  max-width: 100%;
+  overflow-x: clip;
   color-scheme: light;
   background: var(--harvard-white);
 }
@@ -39,7 +41,8 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  overflow-x: hidden;
+  max-width: 100%;
+  overflow-x: clip;
   color: var(--harvard-black);
   background:
     linear-gradient(90deg, rgba(24, 169, 188, 0.035) 1px, transparent 1px) 0 0 / 54px 54px,
@@ -48,8 +51,19 @@ body {
 
 #root,
 main {
+  max-width: 100%;
+  overflow-x: clip;
   min-height: 100%;
   background: var(--harvard-white);
+}
+
+@supports not (overflow-x: clip) {
+  html,
+  body,
+  #root,
+  main {
+    overflow-x: hidden;
+  }
 }
 
 button,
@@ -546,11 +560,46 @@ p {
   max-width: 660px;
 }
 
+.menu-feature-copy,
+.menu-preview-panel,
+.menu-mobile-select-wrap,
+.specials-section,
+.specials-layout,
+.specials-today-card {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 .menu-pill-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin: 22px 0 26px;
+}
+
+.menu-mobile-select-wrap {
+  display: none;
+}
+
+.menu-mobile-select-label {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--harvard-blue);
+  font-size: 0.82rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.menu-mobile-select {
+  width: 100%;
+  max-width: 100%;
+  min-height: 48px;
+  padding: 0.8rem 1rem;
+  border: 3px solid var(--harvard-black);
+  border-radius: var(--radius-md);
+  background: var(--harvard-white);
+  color: var(--harvard-black);
+  font-weight: 900;
 }
 
 .menu-pill,
@@ -580,8 +629,9 @@ p {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 14px;
+  width: 100%;
   max-width: 760px;
-  max-height: 330px;
+  max-height: 300px;
   margin: 0 0 28px;
   padding: 16px;
   overflow: hidden;
@@ -1753,7 +1803,7 @@ p {
 
 @media (min-width: 900px) {
   .menu-preview-panel {
-    max-height: 330px;
+    max-height: 300px;
   }
 }
 
@@ -1977,6 +2027,36 @@ p {
   }
 }
 
+@media (max-width: 700px) {
+  .menu-pill-grid {
+    display: none;
+  }
+
+  .menu-mobile-select-wrap {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 18px 0 18px;
+  }
+
+  .menu-preview-panel {
+    max-height: 260px;
+    padding: 1rem;
+  }
+
+  .menu-feature-image {
+    display: none;
+  }
+
+  .specials-section,
+  .specials-layout,
+  .specials-today-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 @media (max-width: 640px) {
   h2 {
     font-size: clamp(1.8rem, 10vw, 2.6rem);
@@ -2122,7 +2202,7 @@ p {
   }
 
   .menu-preview-panel {
-    max-height: 285px;
+    max-height: 260px;
     padding: 13px;
     border-radius: var(--radius-sm);
   }
@@ -2150,6 +2230,10 @@ p {
 
   .menu-preview-actions .btn {
     width: 100%;
+  }
+
+  .menu-feature-image {
+    display: none;
   }
 
   .gallery-grid {
@@ -2230,5 +2314,17 @@ p {
 
   .gallery-manager-card {
     grid-template-columns: 82px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 380px) {
+  .menu-preview-row {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .menu-preview-price {
+    text-align: left;
+    white-space: normal;
   }
 }
