@@ -52,28 +52,70 @@ export function findMenuItemsByName(categoryIds = [], itemNames = []) {
   })
 }
 
-export function getSpecialItems({ categoryIds = [], itemMatch = [] } = {}) {
+function hasRequiredSpecialTag(item, requiredSpecialTag) {
+  if (!requiredSpecialTag) return true
+
+  return Array.isArray(item.specialTags) && item.specialTags.includes(requiredSpecialTag)
+}
+
+export function getSpecialItems({ categoryIds = [], itemMatch = [], requiredSpecialTag = '' } = {}) {
+  const items = itemMatch.length > 0 ? findMenuItemsByName(categoryIds, itemMatch) : getMenuItemsByCategories(categoryIds)
+
+  return items.filter((item) => hasRequiredSpecialTag(item, requiredSpecialTag))
+}
+
+export function getDiscountedPriceOptions(item, discountPercent = 0) {
+  if (item.discountEligible === false) return []
+
+  const multiplier = (100 - discountPercent) / 100
+
+  const priceOptions = item.sizes || item.options
+
+  if (Array.isArray(priceOptions) && priceOptions.length > 0) {
+    return priceOptions
+      .map((option) => {
+        const amount = parseRandPrice(option.price)
+        if (amount === null) return null
+
+        return {
+          label: option.label,
+          original: option.price,
+          discounted: formatRandPrice(amount * multiplier),
+        }
+      })
+      .filter(Boolean)
+  }
+
+  const amount = parseRandPrice(item.price)
+  if (amount === null) return []
+
+  return [
+    {
+      label: '',
+      original: item.price,
+      discounted: formatRandPrice(amount * multiplier),
+    },
+  ]
+}
+
+export function getDiscountedItems(categoryIds = [], discountPercent = 0, { requiredSpecialTag = '' } = {}) {
+  return getMenuItemsByCategories(categoryIds)
+    .filter((item) => hasRequiredSpecialTag(item, requiredSpecialTag))
+    .map((item) => ({
+      ...item,
+      discountedOptions: getDiscountedPriceOptions(item, discountPercent),
+    }))
+    .filter((item) => item.discountedOptions.length > 0)
+}
+
+export function getHalfPriceItems(categoryIds = []) {
+  return getDiscountedItems(categoryIds, 50)
+}
+
+export function getLegacySpecialItems({ categoryIds = [], itemMatch = [] } = {}) {
   if (itemMatch.length > 0) {
     return findMenuItemsByName(categoryIds, itemMatch)
   }
 
   return getMenuItemsByCategories(categoryIds)
-}
-
-export function getDiscountedItems(categoryIds = [], discountPercent = 0) {
-  const multiplier = (100 - discountPercent) / 100
-
-  return getMenuItemsByCategories(categoryIds).map((item) => {
-    const originalAmount = parseRandPrice(item.price)
-
-    return {
-      ...item,
-      originalAmount,
-      discountedPrice: Number.isFinite(originalAmount) ? originalAmount * multiplier : null,
-    }
-  })
-}
-
-export function getHalfPriceItems(categoryIds = []) {
-  return getDiscountedItems(categoryIds, 50)
 }

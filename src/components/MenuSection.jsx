@@ -138,14 +138,25 @@ function MenuSnippet({ snippet }) {
           <h3 className="menu-snippet-heading">{section.heading}</h3>
           {section.note ? <p className="menu-snippet-note">{section.note}</p> : null}
           {section.promo ? <p className="menu-snippet-promo">{section.promo}</p> : null}
+          {section.exclusionNote ? <p className="menu-snippet-note">{section.exclusionNote}</p> : null}
           <div className="menu-snippet-list">
             {section.items.map((item) => (
               <article className="menu-snippet-item" key={`${section.heading}-${item.name}`}>
                 <div className="menu-snippet-item-head">
                   <strong>{item.name}</strong>
-                  <span className="menu-snippet-price">{item.price}</span>
+                  {!hasPriceOptions(item) ? <span className="menu-snippet-price">{item.price}</span> : null}
                 </div>
                 {item.description ? <p>{item.description}</p> : null}
+                {hasPriceOptions(item) ? (
+                  <div className="menu-size-list">
+                    {getPriceOptions(item).map((option) => (
+                      <span key={`${item.name}-${option.label}`}>
+                        {option.label} <strong>{option.price}</strong>
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+                {item.exclusionNote ? <p className="menu-snippet-exclusion">{item.exclusionNote}</p> : null}
               </article>
             ))}
           </div>
@@ -153,6 +164,14 @@ function MenuSnippet({ snippet }) {
       ))}
     </div>
   )
+}
+
+function getPriceOptions(item) {
+  return item.sizes || item.options || []
+}
+
+function hasPriceOptions(item) {
+  return getPriceOptions(item).length > 0
 }
 
 export default MenuSection

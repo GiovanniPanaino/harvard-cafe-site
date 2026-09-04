@@ -86,7 +86,7 @@ function TodaySpecialCard({ special }) {
       {special.type === 'discount' ? <p className="specials-helper">Prices below are calculated from the current menu.</p> : null}
       {items.length > 0 ? (
         <>
-          <SpecialItemsList items={items} mode={special.type === 'kids-free' ? 'free' : special.type} />
+          <SpecialItemsList items={items} mode={special.type} />
           {hasMissingCategories ? (
             <p className="specials-empty-note">
               {incompleteMenuMessage}
@@ -105,7 +105,9 @@ function TodaySpecialCard({ special }) {
 
 function getItemsForSpecial(special) {
   if (special.type === 'discount') {
-    return getDiscountedItems(special.categoryIds, special.discountPercent)
+    return getDiscountedItems(special.categoryIds, special.discountPercent, {
+      requiredSpecialTag: special.requiredSpecialTag,
+    })
   }
 
   return getSpecialItems(special)
@@ -129,6 +131,20 @@ function SpecialItemsList({ items, mode }) {
 
 function SpecialItemPrice({ item, mode }) {
   if (mode === 'discount') {
+    if (item.discountedOptions?.length) {
+      return (
+        <div className="specials-price-options">
+          {item.discountedOptions.map((option) => (
+            <div className="specials-price-row" key={`${item.name}-${option.label || option.original}`}>
+              {option.label ? <span className="special-price-size">{option.label}</span> : null}
+              <span className="special-price-original">Was {option.original}</span>
+              <strong className="special-price-now">Today {option.discounted}</strong>
+            </div>
+          ))}
+        </div>
+      )
+    }
+
     return (
       <div className="specials-price-row">
         <span className="special-price-original">Was {item.price}</span>
@@ -140,7 +156,12 @@ function SpecialItemPrice({ item, mode }) {
   }
 
   if (mode === 'free') {
-    return <strong className="special-price-now">Free</strong>
+    return (
+      <div className="specials-price-row">
+        <span className="special-price-original">Was {item.price}</span>
+        <strong className="special-price-now">Friday FREE</strong>
+      </div>
+    )
   }
 
   return <strong className="special-price-now">{item.price}</strong>

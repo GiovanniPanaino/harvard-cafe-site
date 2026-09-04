@@ -70,10 +70,14 @@ function PublicSite({ menuOnly = false }) {
 function App() {
   const route = useHashRoute()
   const isAdminRoute = window.location.pathname.replace(/\/$/, '') === '/admin' || route === '#/admin'
-  const [adminUnlocked, setAdminUnlocked] = useState(() => localStorage.getItem('harvard_admin_unlocked') === 'true')
+  const [adminUnlocked, setAdminUnlocked] = useState(() => sessionStorage.getItem('harvard_gallery_access') === 'true')
 
   if (isAdminRoute) {
-    return adminUnlocked ? <AdminDashboard /> : <AdminLogin onLogin={() => setAdminUnlocked(true)} />
+    return adminUnlocked ? (
+      <AdminDashboard onLogout={() => setAdminUnlocked(false)} />
+    ) : (
+      <AdminLogin onLogin={() => setAdminUnlocked(true)} />
+    )
   }
 
   if (route === '#/order' || route === '#/menu') {

@@ -20,6 +20,7 @@ import randAirportSignImage from '../images/rand_airport_sign_biplane.webp'
 import saaMuseumImage from '../images/saa_museum_boeing_747_lebombo.webp'
 import steakImage from '../images/steak_dinner_placeholder.webp'
 import tableFoodImage from '../images/table_with_food_placeholder.webp'
+import { defaultGalleryImages } from './galleryImages'
 
 export const imageMap = {
   hero: {
@@ -103,78 +104,5 @@ export const imageMap = {
     src: controlTowerLandsideImage,
     alt: 'Rand Airport control tower exterior for The Harvard Cafe location',
   },
-  gallery: [
-    {
-      src: tableFoodImage,
-      alt: 'Restaurant table with food for sharing',
-      title: 'Food',
-      category: 'Food',
-    },
-    {
-      src: breakfastPlateImage,
-      alt: 'Breakfast plate served at The Harvard Cafe',
-      title: 'Breakfast',
-      category: 'Food',
-    },
-    {
-      src: coffeeImage,
-      alt: 'Coffee served for cafe visitors',
-      title: 'Coffee',
-      category: 'Venue',
-    },
-    {
-      src: northAmericanHarvardImage,
-      alt: 'North American Harvard aircraft at Rand Airport',
-      title: 'Harvard Aircraft',
-      category: 'Aircraft',
-    },
-    {
-      src: heroObservationDeckImage,
-      alt: 'Observation deck view over Rand Airport',
-      title: 'Apron View',
-      category: 'Apron',
-    },
-    {
-      src: functionsTableImage,
-      alt: 'Elegant function dinner table setup',
-      title: 'Functions',
-      category: 'Events',
-    },
-    {
-      src: harvardPlaneImage,
-      alt: 'Aircraft atmosphere near the Harvard Cafe at Rand Airport',
-      title: 'Aircraft',
-      category: 'Aircraft',
-    },
-    {
-      src: aerialViewImage,
-      alt: 'Apron-side restaurant atmosphere at Rand Airport',
-      title: 'Apron Energy',
-      category: 'Apron View',
-    },
-    {
-      src: controlTowerAirsideImage,
-      alt: 'Rand Airport control tower from the airside',
-      title: 'Rand Airport',
-      category: 'Location',
-    },
-    {
-      src: saaMuseumImage,
-      alt: 'SAA Museum Boeing 747 Lebombo aircraft',
-      title: 'Aviation Heritage',
-      category: 'History',
-    },
-    {
-      src: gardenDiningImage,
-      alt: 'Event atmosphere at The Harvard Cafe',
-      title: 'Event Days',
-      category: 'Events',
-    },
-    {
-      src: randAirportFoyerImage,
-      alt: 'Rand Airport venue detail and aviation atmosphere',
-      title: 'Venue',
-      category: 'Venue',
-    },
-  ],
+  gallery: defaultGalleryImages,
 }

@@ -1,6 +1,8 @@
-import { imageMap } from '../data/imageMap'
+import { useGalleryImages } from '../utils/galleryStorage'
 
 function Gallery() {
+  const galleryImages = useGalleryImages()
+
   return (
     <section className="section gallery-section reveal-on-scroll reveal-up" id="gallery">
       <div className="section-heading">
@@ -8,8 +10,8 @@ function Gallery() {
         <h2>A glimpse of the food, apron, aircraft and atmosphere.</h2>
       </div>
       <div className="gallery-grid">
-        {imageMap.gallery.slice(0, 10).map((item) => (
-          <figure key={`${item.category}-${item.src}`}>
+        {galleryImages.slice(0, 10).map((item) => (
+          <figure key={item.id}>
             <img src={item.src} alt={item.alt} loading="lazy" />
             <figcaption>
               <strong>{item.title}</strong>
