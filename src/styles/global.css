@@ -906,6 +906,194 @@ p {
   font-weight: 950;
 }
 
+.specials-section {
+  background: var(--harvard-white);
+  color: var(--harvard-black);
+}
+
+.specials-heading {
+  max-width: 760px;
+}
+
+.specials-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.specials-today-card,
+.specials-happy-hour-card,
+.specials-day-card {
+  border: 2px solid var(--harvard-black);
+  border-radius: var(--radius-sm);
+  background: var(--harvard-white);
+  box-shadow: 5px 5px 0 rgba(24, 169, 188, 0.18);
+}
+
+.specials-today-card,
+.specials-happy-hour-card {
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.specials-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.specials-card-head h3 {
+  margin: 2px 0 0;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+}
+
+.specials-kicker {
+  color: var(--harvard-blue);
+  font-size: 0.75rem;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.special-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: max-content;
+  padding: 7px 10px;
+  border: 2px solid var(--harvard-black);
+  border-radius: 999px;
+  background: var(--surface-orange-soft);
+  color: var(--harvard-black);
+  font-size: 0.78rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.special-badge-live {
+  background: var(--harvard-orange);
+}
+
+.specials-helper {
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.specials-item-list {
+  display: grid;
+  gap: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
+}
+
+.specials-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  border-left: 5px solid var(--harvard-blue);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.specials-item h4 {
+  margin: 0 0 4px;
+  color: var(--harvard-black);
+  font-size: 0.92rem;
+  line-height: 1.18;
+}
+
+.specials-item p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.38;
+}
+
+.specials-price-row {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  min-width: 96px;
+}
+
+.special-price-original {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: line-through;
+}
+
+.special-price-now {
+  color: var(--harvard-orange);
+  font-size: 1rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.specials-empty-note {
+  margin: 12px 0 0;
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  border-left: 5px solid var(--harvard-orange);
+  border-radius: 8px;
+  background: var(--surface-orange-soft);
+  color: var(--harvard-black);
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.specials-empty-note span {
+  display: block;
+  margin-top: 5px;
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.specials-week-wrap {
+  margin-top: 18px;
+}
+
+.specials-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.specials-day-card {
+  display: grid;
+  gap: 7px;
+  min-height: 96px;
+  padding: 12px;
+  box-shadow: none;
+}
+
+.specials-day-card span {
+  color: var(--harvard-blue);
+  font-size: 0.76rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.specials-day-card strong {
+  color: var(--harvard-black);
+  font-size: 0.92rem;
+  line-height: 1.18;
+}
+
+.specials-day-card.active {
+  background: var(--surface-orange-soft);
+  box-shadow: 4px 4px 0 var(--harvard-orange);
+}
+
 .gallery-grid {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   grid-auto-flow: dense;
@@ -1416,6 +1604,14 @@ p {
   .admin-panel.wide {
     grid-column: span 1;
   }
+
+  .specials-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .specials-week-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
@@ -1611,6 +1807,53 @@ p {
 
   .specials-board article {
     gap: 10px;
+  }
+
+  .specials-section {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .specials-heading,
+  .specials-layout {
+    padding-right: clamp(16px, 5vw, 22px);
+    padding-left: clamp(16px, 5vw, 22px);
+  }
+
+  .specials-card-head h3 {
+    font-size: 1.28rem;
+  }
+
+  .specials-item-list {
+    max-height: 260px;
+  }
+
+  .specials-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .specials-price-row {
+    justify-items: start;
+  }
+
+  .specials-week-wrap {
+    overflow: hidden;
+    padding-left: clamp(16px, 5vw, 22px);
+  }
+
+  .specials-week-grid {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 0 clamp(16px, 5vw, 22px) 8px 0;
+    scroll-snap-type: x mandatory;
+  }
+
+  .specials-day-card {
+    flex: 0 0 180px;
+    min-height: 88px;
+    scroll-snap-align: start;
   }
 
   .menu-pill-grid {

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminLogin from './admin/AdminLogin'
 import ContactSection from './components/ContactSection'
-import DailySpecials from './components/DailySpecials'
 import Footer from './components/Footer'
 import FunctionsSection from './components/FunctionsSection'
 import Gallery from './components/Gallery'
@@ -11,6 +10,7 @@ import Hero from './components/Hero'
 import HistoryTimeline from './components/HistoryTimeline'
 import MenuSection from './components/MenuSection'
 import Offerings from './components/Offerings'
+import SpecialsSection from './components/SpecialsSection'
 import { contactDetails } from './data/contact'
 import useScrollReveal from './hooks/useScrollReveal'
 import './styles/global.css'
@@ -56,7 +56,7 @@ function PublicSite({ menuOnly = false }) {
         </section>
         <Offerings />
         <MenuSection />
-        <DailySpecials />
+        <SpecialsSection />
         <Gallery />
         <FunctionsSection />
         <HistoryTimeline />
