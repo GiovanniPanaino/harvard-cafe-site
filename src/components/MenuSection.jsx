@@ -133,6 +133,8 @@ function MenuSection({ standalone = false }) {
 function MenuSnippet({ snippet }) {
   return (
     <div className="menu-modal-text">
+      {snippet.note ? <p className="menu-snippet-note">{snippet.note}</p> : null}
+      {snippet.promo ? <p className="menu-snippet-promo">{snippet.promo}</p> : null}
       {snippet.sections.map((section) => (
         <section className="menu-snippet-section" key={section.heading}>
           <h3 className="menu-snippet-heading">{section.heading}</h3>
@@ -147,6 +149,7 @@ function MenuSnippet({ snippet }) {
                   {!hasPriceOptions(item) ? <span className="menu-snippet-price">{item.price}</span> : null}
                 </div>
                 {item.description ? <p>{item.description}</p> : null}
+                {item.vegetarian ? <span className="menu-vegetarian-badge">Vegetarian</span> : null}
                 {hasPriceOptions(item) ? (
                   <div className="menu-size-list">
                     {getPriceOptions(item).map((option) => (

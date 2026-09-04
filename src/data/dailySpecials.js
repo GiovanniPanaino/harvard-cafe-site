@@ -27,10 +27,12 @@ export const dailySpecials = {
   },
   Thursday: {
     label: 'Thursday',
-    title: 'Sushi Special',
-    description: 'Thursday is sushi day at Harvard Cafe.',
-    type: 'featured',
+    title: 'Thumping Thursday',
+    description: 'All sushi ½ price. Not available on public holidays or for take away.',
+    type: 'discount',
+    discountPercent: 50,
     categoryIds: ['sushi'],
+    requiredSpecialTag: 'thumping-thursday',
   },
   Friday: {
     label: 'Friday',

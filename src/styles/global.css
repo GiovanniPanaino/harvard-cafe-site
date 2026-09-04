@@ -753,6 +753,20 @@ p {
   font-weight: 950;
 }
 
+.menu-vegetarian-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 3px 8px;
+  border: 1px solid rgba(24, 169, 188, 0.45);
+  border-radius: 999px;
+  background: var(--surface-blue-soft);
+  color: var(--harvard-black);
+  font-size: 0.74rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
 .menu-snippet-item p {
   margin-bottom: 0;
   color: var(--text-soft);

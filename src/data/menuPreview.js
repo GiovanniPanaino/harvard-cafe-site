@@ -10,6 +10,7 @@ const menuCategoryOrder = [
   'combos',
   'burgers',
   'seafood',
+  'sushi',
   'pasta',
   'poultry',
   'meaty-treats',
@@ -21,6 +22,6 @@ const menuCategoryOrder = [
 
 export const menuPreviewCategories = menuCategoryOrder.filter((id) => menuSnippets[id]).map((id) => ({
   id,
-  name: menuSnippets[id].title,
+  name: menuSnippets[id].label || menuSnippets[id].title,
   items: menuSnippets[id].sections.flatMap((section) => section.items).slice(0, 3),
 }))
