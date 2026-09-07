@@ -1,22 +1,22 @@
-import { dailySpecials, weeklySpecials } from '../data/dailySpecials'
-import { getJohannesburgDayName, isCocktailHappyHourNow, isWeekday } from '../utils/specialsDate'
+import { cocktailHappyHour, dailySpecials, weeklySpecials } from '../data/dailySpecials'
+import { getJohannesburgDayName, isCocktailHappyHourNow } from '../utils/specialsDate'
 import {
   formatRandPrice,
   getDiscountedItems,
-  getHalfPriceItems,
   getMissingCategoryIds,
   getSpecialItems,
 } from '../utils/menuPricing'
 
-const cocktailCategoryIds = ['cocktails', 'drinks', 'beverages']
 const incompleteMenuMessage = 'More matching menu items will appear here as the menu is completed.'
 
 function SpecialsSection() {
   const todayName = getJohannesburgDayName()
   const todaySpecial = dailySpecials[todayName] || dailySpecials.Monday
   const happyHourLive = isCocktailHappyHourNow()
-  const weekday = isWeekday(todayName)
-  const cocktailItems = getHalfPriceItems(cocktailCategoryIds)
+  const happyHourDay = cocktailHappyHour.days.includes(todayName)
+  const cocktailItems = getDiscountedItems(cocktailHappyHour.categoryIds, cocktailHappyHour.discountPercent, {
+    requiredSpecialTag: cocktailHappyHour.requiredSpecialTag,
+  })
 
   return (
     <section className="section specials-section reveal-on-scroll reveal-up" id="specials">
@@ -35,18 +35,18 @@ function SpecialsSection() {
           <div className="specials-card-head">
             <div>
               <span className="specials-kicker">Cocktails</span>
-              <h3>Cocktail Happy Hour</h3>
+              <h3>{cocktailHappyHour.title}</h3>
             </div>
             <span className={happyHourLive ? 'special-badge special-badge-live' : 'special-badge'}>
-              {happyHourLive ? 'On now' : weekday ? '16:00 to 18:00' : 'Mon to Fri'}
+              {getCocktailHappyHourStatus({ happyHourLive, happyHourDay })}
             </span>
           </div>
-          <p>Half price cocktails, Monday to Friday, 16:00 to 18:00.</p>
+          <p>{cocktailHappyHour.description}</p>
           {cocktailItems.length > 0 ? (
             <SpecialItemsList items={cocktailItems} mode="discount" />
           ) : (
             <p className="specials-empty-note">
-              Cocktail menu items are being added. Happy hour runs Monday to Friday, 16:00 to 18:00.
+              Cocktail menu items are being added. Happy hour runs {formatHappyHourWindow()}.
             </p>
           )}
         </article>
@@ -67,6 +67,18 @@ function SpecialsSection() {
       </div>
     </section>
   )
+}
+
+function getCocktailHappyHourStatus({ happyHourLive, happyHourDay }) {
+  if (happyHourLive) return 'On now'
+
+  if (happyHourDay) return `${cocktailHappyHour.startTime} to ${cocktailHappyHour.endTime}`
+
+  return `Available ${formatHappyHourWindow()}`
+}
+
+function formatHappyHourWindow() {
+  return `Monday to Friday, ${cocktailHappyHour.startTime} to ${cocktailHappyHour.endTime}`
 }
 
 function TodaySpecialCard({ special }) {

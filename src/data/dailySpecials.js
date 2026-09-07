@@ -60,4 +60,17 @@ export const dailySpecials = {
   },
 }
 
+export const cocktailHappyHour = {
+  title: 'Cocktail Happy Hour',
+  description:
+    'Monday to Friday, 16:00 to 18:00: ½ price cocktails. Not available on public holidays or for take away.',
+  type: 'discount',
+  discountPercent: 50,
+  categoryIds: ['cocktails'],
+  requiredSpecialTag: 'cocktail-happy-hour',
+  days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+  startTime: '16:00',
+  endTime: '18:00',
+}
+
 export const weeklySpecials = Object.values(dailySpecials)

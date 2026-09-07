@@ -17,6 +17,7 @@ const menuCategoryOrder = [
   'pizzas',
   'speciality-dishes',
   'sweet-sensations',
+  'cocktails',
   'future-pilots',
 ]
 
