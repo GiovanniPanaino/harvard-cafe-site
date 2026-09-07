@@ -9,7 +9,7 @@ const offerings = [
 
 function Offerings() {
   return (
-    <section className="section reveal-on-scroll reveal-up" id="offerings">
+    <section className="section" id="offerings" data-reveal="fade-up">
       <div className="section-heading">
         <p className="eyebrow">Why Visit Harvard Cafe</p>
         <h2>Food, flight and gathering in one memorable setting.</h2>
@@ -18,7 +18,7 @@ function Offerings() {
         {offerings.map(([title, imageKey, body]) => {
           const image = imageMap.offerings[imageKey]
           return (
-            <article className="feature-card image-feature-card" key={title}>
+            <article className="feature-card image-feature-card" key={title} data-reveal-child>
               <img src={image.src} alt={image.alt} loading="lazy" />
               <div>
                 <span className="feature-icon">*</span>

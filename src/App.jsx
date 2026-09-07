@@ -48,7 +48,7 @@ function PublicSite({ menuOnly = false }) {
       <Header />
       <main>
         <Hero />
-        <section className="quick-action-strip reveal-on-scroll reveal-up" aria-label="Quick actions">
+        <section className="quick-action-strip" data-reveal="fade-up" aria-label="Quick actions">
           <a className="quick-action-button" href="#menu">View Menu</a>
           <a className="quick-action-button" href={contactDetails.phonePrimary.href}>Call</a>
           <a className="quick-action-button" href={contactDetails.email.href}>Email</a>

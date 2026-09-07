@@ -19,7 +19,7 @@ function SpecialsSection() {
   })
 
   return (
-    <section className="section specials-section reveal-on-scroll reveal-up" id="specials">
+    <section className="section specials-section" id="specials" data-reveal="fade-up">
       <div className="section-heading specials-heading">
         <p className="eyebrow">Today&apos;s Flight Plan</p>
         <h2>Daily Specials</h2>
@@ -31,7 +31,7 @@ function SpecialsSection() {
 
       <div className="specials-layout">
         <TodaySpecialCard special={todaySpecial} />
-        <article className="specials-happy-hour-card">
+        <article className="specials-happy-hour-card" data-reveal="bank-right">
           <div className="specials-card-head">
             <div>
               <span className="specials-kicker">Cocktails</span>
@@ -58,6 +58,7 @@ function SpecialsSection() {
             <article
               className={special.label === todayName ? 'specials-day-card active' : 'specials-day-card'}
               key={special.label}
+              data-reveal-child
             >
               <span>{special.label}</span>
               <strong>{special.title}</strong>
@@ -86,7 +87,7 @@ function TodaySpecialCard({ special }) {
   const hasMissingCategories = getMissingCategoryIds(special.categoryIds).length > 0
 
   return (
-    <article className="specials-today-card">
+    <article className="specials-today-card" data-reveal="bank-left">
       <div className="specials-card-head">
         <div>
           <span className="specials-kicker">Today&apos;s Special</span>

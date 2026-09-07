@@ -8,18 +8,18 @@ const timeline = [
 
 function HistoryTimeline() {
   return (
-    <section className="section reveal-on-scroll reveal-up" id="history">
+    <section className="section" id="history" data-reveal="fade-up">
       <div className="section-heading">
         <p className="eyebrow">Rand Airport Heritage</p>
         <h2>A little aviation charm with your table.</h2>
       </div>
       <div className="history-layout">
-        <figure className="section-image-card">
+        <figure className="section-image-card" data-reveal="zoom-soft">
           <img src={imageMap.history.src} alt={imageMap.history.alt} loading="lazy" />
         </figure>
         <div className="timeline">
           {timeline.map(([title, body], index) => (
-            <article key={title}>
+            <article key={title} data-reveal={index % 2 === 0 ? 'fly-right' : 'fly-left'}>
               <span>{index + 1}</span>
               <div>
                 <h3>{title}</h3>

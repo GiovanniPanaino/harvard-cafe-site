@@ -50,7 +50,7 @@ function MenuSection({ standalone = false }) {
 
   return (
     <>
-      <section className={standalone ? 'section menu-feature standalone-menu reveal-on-scroll reveal-up' : 'section menu-feature reveal-on-scroll reveal-up'} id="menu">
+      <section className={standalone ? 'section menu-feature standalone-menu' : 'section menu-feature'} id="menu" data-reveal="fade-up">
         <div className="menu-feature-copy">
           <p className="eyebrow">Menu</p>
           <h2>View the Harvard Cafe menu before you visit.</h2>
@@ -58,7 +58,7 @@ function MenuSection({ standalone = false }) {
             From breakfast and burgers to pizzas, grills, seafood, sushi and drinks, tap a category for a quick
             taste of what is available.
           </p>
-          <div className="menu-pill-grid" aria-label="Menu category preview">
+          <div className="menu-pill-grid" data-reveal-child aria-label="Menu category preview">
             {menuPreviewCategories.map((category) => (
               <button
                 className={category.id === activeCategoryId ? 'menu-pill active' : 'menu-pill'}
@@ -72,7 +72,7 @@ function MenuSection({ standalone = false }) {
             ))}
           </div>
           {/* Mobile uses a dropdown because the Harvard Cafe menu contains many categories. */}
-          <div className="menu-mobile-select-wrap">
+          <div className="menu-mobile-select-wrap" data-reveal-child>
             <label className="menu-mobile-select-label" htmlFor="menu-category-select">
               Choose menu section
             </label>
@@ -90,7 +90,7 @@ function MenuSection({ standalone = false }) {
             </select>
           </div>
           {selectedCategory && (
-            <div className="menu-preview-panel" aria-live="polite">
+            <div className="menu-preview-panel" data-reveal-child aria-live="polite">
               <div className="menu-preview-header">
                 <span>Preview</span>
                 <strong>{previewSnippet.title}</strong>
@@ -110,7 +110,7 @@ function MenuSection({ standalone = false }) {
             </div>
           )}
         </div>
-        <figure className="menu-feature-image">
+        <figure className="menu-feature-image" data-reveal-child>
           <img src={imageMap.menuFeature.src} alt={imageMap.menuFeature.alt} loading={standalone ? 'eager' : 'lazy'} />
         </figure>
       </section>

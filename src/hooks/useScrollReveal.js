@@ -2,14 +2,9 @@ import { useEffect } from 'react'
 
 function useScrollReveal() {
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll('.reveal-on-scroll'))
+    const elements = Array.from(document.querySelectorAll('[data-reveal]'))
 
     if (!elements.length) {
-      return undefined
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      elements.forEach((element) => element.classList.add('reveal-visible'))
       return undefined
     }
 
@@ -17,14 +12,15 @@ function useScrollReveal() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('reveal-visible')
-            observer.unobserve(entry.target)
+            entry.target.classList.add('is-visible')
+          } else {
+            entry.target.classList.remove('is-visible')
           }
         })
       },
       {
-        threshold: 0.12,
-        rootMargin: '0px 0px -80px 0px',
+        threshold: 0.18,
+        rootMargin: '0px 0px -8% 0px',
       },
     )
 

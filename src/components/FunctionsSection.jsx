@@ -5,11 +5,11 @@ const functionTypes = ['Birthdays', 'Corporate Events', 'Year-End Functions', 'F
 
 function FunctionsSection() {
   return (
-    <section className="section functions-feature reveal-on-scroll reveal-left" id="functions">
-      <figure className="section-image-card">
+    <section className="section functions-feature" id="functions" data-reveal="fade-up">
+      <figure className="section-image-card" data-reveal="fly-left">
         <img src={imageMap.functions.src} alt={imageMap.functions.alt} loading="lazy" />
       </figure>
-      <div>
+      <div data-reveal="fly-right">
         <p className="eyebrow">Functions & Events</p>
         <h2>Host a gathering guests remember.</h2>
         <p>
@@ -17,7 +17,7 @@ function FunctionsSection() {
           runway at Rand Airport.
         </p>
         <div className="pill-list">
-          {functionTypes.map((type) => <span key={type}>{type}</span>)}
+          {functionTypes.map((type) => <span key={type} data-reveal-child>{type}</span>)}
         </div>
         <div className="section-actions">
           <a className="btn btn-primary" href={contactDetails.email.href}>Function Enquiries</a>

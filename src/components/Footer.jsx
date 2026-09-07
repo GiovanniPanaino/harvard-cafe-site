@@ -2,7 +2,7 @@ import { contactDetails } from '../data/contact'
 
 function Footer() {
   return (
-    <footer className="site-footer reveal-on-scroll reveal-up">
+    <footer className="site-footer" data-reveal="fade-up">
       <p>
         Harvard Cafe at Rand Airport -{' '}
         <a href={contactDetails.phonePrimary.href}>{contactDetails.phonePrimary.label}</a> /{' '}

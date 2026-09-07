@@ -2,8 +2,8 @@ import { contactDetails } from '../data/contact'
 
 function ContactSection() {
   return (
-    <section className="section split-section reveal-on-scroll reveal-up" id="contact">
-      <div>
+    <section className="section split-section" id="contact" data-reveal="fade-up">
+      <div data-reveal="fly-left">
         <p className="eyebrow">Contact / Location</p>
         <h2>Find us at Rand Airport.</h2>
         <p>Call, email or get directions before you arrive.</p>
@@ -39,7 +39,7 @@ function ContactSection() {
           </div>
         </dl>
       </div>
-      <div className="footer-map" aria-label="Map showing Harvard Cafe at Rand Airport">
+      <div className="footer-map" data-reveal="fly-right" aria-label="Map showing Harvard Cafe at Rand Airport">
         <iframe
           title="Harvard Cafe Rand Airport map"
           src="https://www.google.com/maps?q=The%20Harvard%20Cafe%20Rand%20Airport%20Germiston&output=embed"
