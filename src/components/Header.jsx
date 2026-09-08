@@ -1,4 +1,5 @@
 import headerBanner from '../images/banner3.png'
+import logoElipse from '../images/LogoElipse.png'
 import { contactDetails } from '../data/contact'
 
 function Header({ compact = false }) {
@@ -16,10 +17,7 @@ function Header({ compact = false }) {
       style={{ '--header-banner-image': `url(${headerBanner})` }}
     >
       <a className="brand" href="#/" aria-label="The Harvard Cafe home">
-        <span className="brand-copy">
-          <strong>The Harvard Cafe</strong>
-          <small>Where time flies</small>
-        </span>
+        <img src={logoElipse} alt="The Harvard Cafe logo" className="brand-logo" />
       </a>
       <nav className="main-nav" aria-label="Main navigation">
         {links.map(([label, href]) => (
