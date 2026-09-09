@@ -65,9 +65,7 @@ function SpecialsSection() {
           <p>{cocktailHappyHour.description}</p>
           {!happyHourLive ? (
             <p className="specials-empty-note">
-              {happyHourDay
-                ? `Available today from ${cocktailHappyHour.startTime} to ${cocktailHappyHour.endTime}.`
-                : `Available ${formatHappyHourWindow()}.`}
+              Available {formatHappyHourWindow()}.
             </p>
           ) : cocktailItems.length > 0 ? (
             <SpecialItemsList items={cocktailItems} mode="discount" />
@@ -176,8 +174,7 @@ function SpecialItemPrice({ item, mode }) {
           {item.discountedOptions.map((option) => (
             <div className="specials-price-row" key={`${item.name}-${option.label || option.original}`}>
               {option.label ? <span className="special-price-size">{option.label}</span> : null}
-              <span className="special-price-original">Was {option.original}</span>
-              <strong className="special-price-now">Today {option.discounted}</strong>
+              <strong className="special-price-now">{option.discounted}</strong>
             </div>
           ))}
         </div>
@@ -186,9 +183,8 @@ function SpecialItemPrice({ item, mode }) {
 
     return (
       <div className="specials-price-row">
-        <span className="special-price-original">Was {item.price}</span>
         <strong className="special-price-now">
-          {item.discountedPrice === null ? 'Today SQ' : `Today ${formatRandPrice(item.discountedPrice)}`}
+          {item.discountedPrice === null ? 'SQ' : formatRandPrice(item.discountedPrice)}
         </strong>
       </div>
     )
@@ -197,7 +193,6 @@ function SpecialItemPrice({ item, mode }) {
   if (mode === 'free') {
     return (
       <div className="specials-price-row">
-        <span className="special-price-original">Was {item.price}</span>
         <strong className="special-price-now">Friday FREE</strong>
       </div>
     )
