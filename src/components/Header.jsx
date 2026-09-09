@@ -1,10 +1,9 @@
-import headerBanner from '../images/banner3.png'
-import logoElipse from '../images/LogoElipse.png'
+import headerBanner from '../images/banner3.webp'
+import logoElipse from '../images/LogoElipse.webp'
 import { contactDetails } from '../data/contact'
 
 function Header({ compact = false }) {
   const links = [
-    ['Home', '#/'],
     ['Menu', '#menu'],
     ['Gallery', '#gallery'],
     ['Functions', '#functions'],

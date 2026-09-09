@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { cocktailHappyHour, dailySpecials, weeklySpecials } from '../data/dailySpecials'
 import { getJohannesburgDayName, isCocktailHappyHourNow } from '../utils/specialsDate'
 import {
@@ -10,9 +11,29 @@ import {
 const incompleteMenuMessage = 'More matching menu items will appear here as the menu is completed.'
 
 function SpecialsSection() {
-  const todayName = getJohannesburgDayName()
+  const [now, setNow] = useState(() => new Date())
+
+  useEffect(() => {
+    let timer
+    const refresh = () => {
+      const current = new Date()
+      setNow(current)
+      clearTimeout(timer)
+      timer = setTimeout(refresh, 60000 - current.getTime() % 60000)
+    }
+    refresh()
+    window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', refresh)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', refresh)
+    }
+  }, [])
+
+  const todayName = getJohannesburgDayName(now)
   const todaySpecial = dailySpecials[todayName] || dailySpecials.Monday
-  const happyHourLive = isCocktailHappyHourNow()
+  const happyHourLive = isCocktailHappyHourNow(now)
   const happyHourDay = cocktailHappyHour.days.includes(todayName)
   const cocktailItems = getDiscountedItems(cocktailHappyHour.categoryIds, cocktailHappyHour.discountPercent, {
     requiredSpecialTag: cocktailHappyHour.requiredSpecialTag,
@@ -42,7 +63,13 @@ function SpecialsSection() {
             </span>
           </div>
           <p>{cocktailHappyHour.description}</p>
-          {cocktailItems.length > 0 ? (
+          {!happyHourLive ? (
+            <p className="specials-empty-note">
+              {happyHourDay
+                ? `Available today from ${cocktailHappyHour.startTime} to ${cocktailHappyHour.endTime}.`
+                : `Available ${formatHappyHourWindow()}.`}
+            </p>
+          ) : cocktailItems.length > 0 ? (
             <SpecialItemsList items={cocktailItems} mode="discount" />
           ) : (
             <p className="specials-empty-note">
@@ -133,7 +160,6 @@ function SpecialItemsList({ items, mode }) {
         <article className="specials-item" key={`${item.categoryId}-${item.sectionHeading}-${item.name}`}>
           <div>
             <h4>{item.name}</h4>
-            {item.description ? <p>{item.description}</p> : null}
           </div>
           <SpecialItemPrice item={item} mode={mode} />
         </article>
