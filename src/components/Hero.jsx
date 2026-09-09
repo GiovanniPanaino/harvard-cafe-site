@@ -1,11 +1,22 @@
-import { imageMap } from '../data/imageMap'
 import { contactDetails } from '../data/contact'
+import nightGardenPoster from '../images/NightGarden.webp'
+import heroFlybyVideo from '../videos/flyby.mp4'
 
 function Hero() {
   return (
     <section id="top" className="hero-section">
       <div className="hero-media">
-        <img src={imageMap.hero.src} alt={imageMap.hero.alt} fetchPriority="high" />
+        <video
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={nightGardenPoster}
+          aria-hidden="true"
+        >
+          <source src={heroFlybyVideo} type="video/mp4" />
+        </video>
       </div>
       <div className="hero-content" data-reveal="fly-left">
         <p className="eyebrow">Rand Airport apron dining</p>
