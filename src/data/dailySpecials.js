@@ -45,7 +45,7 @@ export const dailySpecials = {
   Saturday: {
     label: 'Saturday',
     title: 'Breakfast Buffet',
-    description: 'Start the weekend with the Harvard Cafe breakfast buffet.',
+    description: 'Start the weekend with the Harvard Café breakfast buffet.',
     type: 'buffet',
     categoryIds: ['breakfast'],
     itemMatch: ['WEEKEND BREAKFAST BUFFET'],

@@ -11,7 +11,7 @@ function Offerings() {
   return (
     <section className="section" id="offerings" data-reveal="fade-up">
       <div className="section-heading">
-        <p className="eyebrow">Why Visit Harvard Cafe</p>
+        <p className="eyebrow">Why Visit Harvard Café</p>
         <h2>Food, flight and gathering in one memorable setting.</h2>
       </div>
       <div className="feature-grid">

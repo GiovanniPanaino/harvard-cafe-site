@@ -25,7 +25,7 @@ import { defaultGalleryImages } from './galleryImages'
 export const imageMap = {
   hero: {
     src: nightGardenHero,
-    alt: 'Harvard Cafe night garden atmosphere',
+    alt: 'Harvard Café night garden atmosphere',
   },
   offerings: {
     breakfast: {
@@ -34,7 +34,7 @@ export const imageMap = {
     },
     burgers: {
       src: outsideBarImage,
-      alt: 'Harvard Cafe outside bar and drinks area',
+      alt: 'Harvard Café outside bar and drinks area',
     },
     coffee: {
       src: coffeeImage,
@@ -50,7 +50,7 @@ export const imageMap = {
     },
     outsideBar: {
       src: outsideBarAtmosphereImage,
-      alt: 'Harvard Cafe outside bar atmosphere at Rand Airport',
+      alt: 'Harvard Café outside bar atmosphere at Rand Airport',
     },
     harvardPlane: {
       src: harvardPlaneImage,
@@ -73,7 +73,7 @@ export const imageMap = {
   specials: [
     {
       src: breakfastPlateImage,
-      alt: 'Breakfast special at The Harvard Cafe',
+      alt: 'Breakfast special at The Harvard Café',
     },
     {
       src: burgersImage,
@@ -90,7 +90,7 @@ export const imageMap = {
   ],
   menuFeature: {
     src: tableFoodImage,
-    alt: 'A Harvard Cafe table set with food and drinks before a visit',
+    alt: 'A Harvard Café table set with food and drinks before a visit',
   },
   functions: {
     src: functionsTableImage,
@@ -102,7 +102,7 @@ export const imageMap = {
   },
   contact: {
     src: controlTowerLandsideImage,
-    alt: 'Rand Airport control tower exterior for The Harvard Cafe location',
+    alt: 'Rand Airport control tower exterior for The Harvard Café location',
   },
   gallery: defaultGalleryImages,
 }

@@ -45,7 +45,7 @@ function SpecialsSection() {
         <p className="eyebrow">Today&apos;s Flight Plan</p>
         <h2>Daily Specials</h2>
         <p>
-          From half-price pizzas to weekend buffets, Harvard Cafe keeps the week moving with specials worth planning
+          From half-price pizzas to weekend buffets, Harvard Café keeps the week moving with specials worth planning
           around.
         </p>
       </div>
@@ -135,7 +135,7 @@ function TodaySpecialCard({ special }) {
         </>
       ) : (
         <p className="specials-empty-note">
-          Menu items for this special are being added. Please view the full menu or contact Harvard Cafe.
+          Menu items for this special are being added. Please view the full menu or contact Harvard Café.
           <span>{incompleteMenuMessage}</span>
         </p>
       )}

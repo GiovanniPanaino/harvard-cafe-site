@@ -53,7 +53,7 @@ function MenuSection({ standalone = false }) {
       <section className={standalone ? 'section menu-feature standalone-menu' : 'section menu-feature'} id="menu" data-reveal="fade-up">
         <div className="menu-feature-copy">
           <p className="eyebrow">Menu</p>
-          <h2>View the Harvard Cafe menu before you visit.</h2>
+          <h2>View the Harvard Café menu before you visit.</h2>
           <p>
             From breakfast and burgers to pizzas, grills, seafood, sushi and drinks, tap a category for a quick
             taste of what is available.

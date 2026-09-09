@@ -15,8 +15,8 @@ function Header({ compact = false }) {
       className={compact ? 'site-header compact' : 'site-header'}
       style={{ '--header-banner-image': `url(${headerBanner})` }}
     >
-      <a className="brand" href="#/" aria-label="The Harvard Cafe home">
-        <img src={logoElipse} alt="The Harvard Cafe logo" className="brand-logo" />
+      <a className="brand" href="#/" aria-label="The Harvard Café home">
+        <img src={logoElipse} alt="The Harvard Café logo" className="brand-logo" />
       </a>
       <nav className="main-nav" aria-label="Main navigation">
         {links.map(([label, href]) => (
@@ -27,7 +27,7 @@ function Header({ compact = false }) {
       </nav>
       <div className="header-actions">
         <a className="btn btn-primary" href="#menu">View Menu</a>
-        <a className="btn btn-outline header-call" href={contactDetails.phonePrimary.href}>Call Harvard Cafe</a>
+        <a className="btn btn-outline header-call" href={contactDetails.phonePrimary.href}>Call Harvard Café</a>
       </div>
     </header>
   )

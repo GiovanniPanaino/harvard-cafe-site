@@ -20,7 +20,7 @@ function Hero() {
       </div>
       <div className="hero-content" data-reveal="fly-left">
         <p className="eyebrow">Rand Airport apron dining</p>
-        <h1>The Harvard Cafe</h1>
+        <h1>The Harvard Café</h1>
         <p className="hero-copy">
           Where time flies. Eat, meet and unwind beside the runway at Rand Airport.
         </p>
@@ -30,7 +30,7 @@ function Hero() {
           <a className="btn btn-outline" href={contactDetails.directions} target="_blank" rel="noreferrer">Get Directions</a>
         </div>
       </div>
-      <div className="terminal-strip" data-reveal="fade-up" aria-label="Today at The Harvard Cafe">
+      <div className="terminal-strip" data-reveal="fade-up" aria-label="Today at The Harvard Café">
         <span data-reveal-child>Where Time Flies</span>
         <span data-reveal-child>Apron Seating</span>
         <span data-reveal-child>Family Friendly</span>

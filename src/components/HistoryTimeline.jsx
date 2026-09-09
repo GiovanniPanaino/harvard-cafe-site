@@ -2,7 +2,7 @@ import { imageMap } from '../data/imageMap'
 
 const timeline = [
   ['Rand Airport setting', 'A working aviation backdrop gives every visit a sense of occasion.'],
-  ['Aircraft atmosphere', 'Harvard Cafe carries the graphic confidence and nostalgia of flight.'],
+  ['Aircraft atmosphere', 'Harvard Café carries the graphic confidence and nostalgia of flight.'],
   ['A place to gather', 'Meals, coffee, families and events come together beside the apron.'],
 ]
 

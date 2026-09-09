@@ -21,7 +21,7 @@ function FunctionsSection() {
         </div>
         <div className="section-actions">
           <a className="btn btn-primary" href={contactDetails.email.href}>Function Enquiries</a>
-          <a className="btn btn-outline" href={contactDetails.phonePrimary.href}>Call Harvard Cafe</a>
+          <a className="btn btn-outline" href={contactDetails.phonePrimary.href}>Call Harvard Café</a>
         </div>
       </div>
     </section>

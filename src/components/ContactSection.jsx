@@ -8,8 +8,8 @@ function ContactSection() {
         <h2>Find us at Rand Airport.</h2>
         <p>Call, email or get directions before you arrive.</p>
         <div className="contact-actions">
-          <a className="btn btn-primary" href={contactDetails.phonePrimary.href}>Call Harvard Cafe</a>
-          <a className="btn btn-secondary" href={contactDetails.email.href}>Email Harvard Cafe</a>
+          <a className="btn btn-primary" href={contactDetails.phonePrimary.href}>Call Harvard Café</a>
+          <a className="btn btn-secondary" href={contactDetails.email.href}>Email Harvard Café</a>
           <a className="btn btn-outline" href={contactDetails.directions} target="_blank" rel="noreferrer">Get Directions</a>
         </div>
         <dl className="contact-list">
@@ -39,9 +39,9 @@ function ContactSection() {
           </div>
         </dl>
       </div>
-      <div className="footer-map" data-reveal="fly-right" aria-label="Map showing Harvard Cafe at Rand Airport">
+      <div className="footer-map" data-reveal="fly-right" aria-label="Map showing Harvard Café at Rand Airport">
         <iframe
-          title="Harvard Cafe Rand Airport map"
+          title="Harvard Café Rand Airport map"
           src="https://www.google.com/maps?q=The%20Harvard%20Cafe%20Rand%20Airport%20Germiston&output=embed"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

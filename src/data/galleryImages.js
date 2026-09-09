@@ -22,7 +22,7 @@ export const defaultGalleryImages = [
   {
     id: 'gallery-2',
     src: breakfastPlateImage,
-    alt: 'Breakfast plate served at The Harvard Cafe',
+    alt: 'Breakfast plate served at The Harvard Café',
     title: 'Breakfast',
     category: 'Food',
   },
@@ -57,7 +57,7 @@ export const defaultGalleryImages = [
   {
     id: 'gallery-7',
     src: harvardPlaneImage,
-    alt: 'Aircraft atmosphere near the Harvard Cafe at Rand Airport',
+    alt: 'Aircraft atmosphere near the Harvard Café at Rand Airport',
     title: 'Aircraft',
     category: 'Aircraft',
   },
@@ -85,7 +85,7 @@ export const defaultGalleryImages = [
   {
     id: 'gallery-11',
     src: gardenDiningImage,
-    alt: 'Event atmosphere at The Harvard Cafe',
+    alt: 'Event atmosphere at The Harvard Café',
     title: 'Event Days',
     category: 'Events',
   },
