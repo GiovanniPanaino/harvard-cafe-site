@@ -1,22 +1,41 @@
+import { useState } from 'react'
 import { contactDetails } from '../data/contact'
 import nightGardenPoster from '../images/NightGarden.webp'
 import heroFlybyVideo from '../videos/flyby.mp4'
 
 function Hero() {
+  const [videoState, setVideoState] = useState('loading')
+
+  const handleVideoReady = () => {
+    setVideoState((currentState) => currentState === 'error' ? currentState : 'ready')
+  }
+
   return (
     <section id="top" className="hero-section">
       <div className="hero-media">
         <video
-          className="hero-video"
+          className={`hero-video${videoState === 'ready' ? ' is-ready' : ''}${videoState === 'error' ? ' is-error' : ''}`}
           autoPlay
           muted
           loop
           playsInline
-          poster={nightGardenPoster}
+          preload="auto"
           aria-hidden="true"
+          onLoadedData={handleVideoReady}
+          onCanPlay={handleVideoReady}
+          onPlaying={handleVideoReady}
+          onError={() => setVideoState('error')}
         >
           <source src={heroFlybyVideo} type="video/mp4" />
         </video>
+        {videoState === 'error' ? (
+          <img
+            className="hero-fallback-image"
+            src={nightGardenPoster}
+            alt=""
+            aria-hidden="true"
+          />
+        ) : null}
       </div>
       <div className="hero-content" data-reveal="fly-left">
         <p className="eyebrow">Rand Airport apron dining</p>

@@ -392,22 +392,33 @@ p {
   pointer-events: none;
 }
 
-.hero-video {
+.hero-video,
+.hero-fallback-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 1;
-  filter: brightness(0.86) contrast(1.12) saturate(1.08);
   object-fit: cover;
   object-position: center center;
   z-index: 0;
 }
 
+.hero-video {
+  opacity: 1;
+  filter: brightness(0.86) contrast(1.12) saturate(1.08);
+}
+
+.hero-video.is-error {
+  visibility: hidden;
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
   width: min(100%, 720px);
+  min-height: inherit;
   margin-left: 0;
   padding: clamp(82px, 11vw, 142px) clamp(1.25rem, 4vw, 3rem) 118px clamp(1.25rem, 5vw, 4rem);
   box-sizing: border-box;
@@ -437,7 +448,7 @@ p {
 
 .hero-actions {
   flex-wrap: wrap;
-  margin-top: 30px;
+  margin-top: auto;
 }
 
 .terminal-strip {
@@ -2029,7 +2040,7 @@ p {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     max-width: 420px;
-    margin-top: 20px;
+    margin-top: auto;
   }
 
   .hero-actions .btn {
@@ -2456,5 +2467,79 @@ p {
   .menu-preview-price {
     text-align: left;
     white-space: normal;
+  }
+}
+
+@media (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+  .site-header {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    padding: 4px 12px;
+  }
+
+  .brand-logo {
+    max-width: 120px;
+    max-height: 38px;
+  }
+
+  .main-nav {
+    width: auto;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 0;
+    font-size: 0.78rem;
+  }
+
+  .header-actions {
+    display: flex;
+    width: auto;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .header-actions .btn {
+    min-height: 32px;
+    padding: 5px 9px;
+    font-size: 0.76rem;
+  }
+
+  .hero-section {
+    min-height: max(320px, calc(100svh - 50px));
+  }
+
+  .hero-content {
+    padding: 24px 24px 82px;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+  }
+
+  .hero-copy {
+    margin-bottom: 12px;
+    font-size: 0.92rem;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+
+  .hero-actions .btn {
+    min-height: 36px;
+    padding: 7px 10px;
+    font-size: 0.8rem;
+  }
+
+  .terminal-strip {
+    right: 12px;
+    bottom: 10px;
+    left: 12px;
+  }
+
+  .terminal-strip span {
+    padding: 6px;
+    font-size: 0.66rem;
   }
 }
