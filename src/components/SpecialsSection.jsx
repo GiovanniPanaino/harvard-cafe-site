@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import takeawayPizzaImage from '../images/Pizza4.webp'
 import { cocktailHappyHour, dailySpecials, weeklySpecials } from '../data/dailySpecials'
 import { getJohannesburgDayName, isCocktailHappyHourNow } from '../utils/specialsDate'
 import {
@@ -74,6 +75,27 @@ function SpecialsSection() {
               Cocktail menu items are being added. Happy hour runs {formatHappyHourWindow()}.
             </p>
           )}
+        </article>
+        <article className="specials-takeaway-card" data-reveal="bank-right">
+          <img
+            className="specials-takeaway-image"
+            src={takeawayPizzaImage}
+            alt="Large pizzas prepared for take away at The Harvard Café"
+            loading="lazy"
+          />
+          <div className="specials-takeaway-content">
+            <div className="specials-card-head">
+              <div>
+                <span className="specials-kicker">Take Away Pizza Special</span>
+                <h3>Take Away Pizza Special</h3>
+              </div>
+              <span className="special-badge">Every Day</span>
+            </div>
+            <div className="specials-takeaway-offer">
+              <strong>Any 2 Large Pizzas for Take Away</strong>
+              <span>R230</span>
+            </div>
+          </div>
         </article>
       </div>
 

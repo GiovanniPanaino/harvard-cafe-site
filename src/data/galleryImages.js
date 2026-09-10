@@ -9,13 +9,13 @@ import heroObservationDeckImage from '../images/hero_rand_airport_observation_de
 import northAmericanHarvardImage from '../images/north_american_harvard_iia_7111.webp'
 import randAirportFoyerImage from '../images/rand_airport_foyer.webp'
 import saaMuseumImage from '../images/saa_museum_boeing_747_lebombo.webp'
-import tableFoodImage from '../images/table_with_food_placeholder.webp'
+import pizzaImage from '../images/Pizza2.webp'
 
 export const defaultGalleryImages = [
   {
     id: 'gallery-1',
-    src: tableFoodImage,
-    alt: 'Restaurant table with food for sharing',
+    src: pizzaImage,
+    alt: 'Freshly prepared pizza at The Harvard Café',
     title: 'Food',
     category: 'Food',
   },

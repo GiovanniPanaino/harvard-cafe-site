@@ -565,11 +565,28 @@ p {
   overflow: hidden;
 }
 
-.image-feature-card > img {
+.image-feature-card > img,
+.image-feature-card > video,
+.feature-function-carousel {
   width: 100%;
   aspect-ratio: 16 / 10;
+  overflow: hidden;
   object-fit: cover;
+  object-position: center;
   background: var(--surface-blue-soft);
+}
+
+.image-feature-card > video,
+.feature-function-carousel > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.feature-function-carousel > img {
+  animation: gallery-image-in 320ms ease-out;
 }
 
 .image-feature-card > div {
@@ -615,7 +632,8 @@ p {
 .specials-section,
 .specials-layout,
 .specials-today-card,
-.specials-happy-hour-card {
+.specials-happy-hour-card,
+.specials-takeaway-card {
   max-width: 100%;
   box-sizing: border-box;
 }
@@ -1103,8 +1121,13 @@ p {
   align-items: start;
 }
 
+.specials-today-card {
+  grid-row: span 2;
+}
+
 .specials-today-card,
 .specials-happy-hour-card,
+.specials-takeaway-card,
 .specials-day-card {
   border: 2px solid var(--harvard-black);
   border-radius: var(--radius-sm);
@@ -1115,6 +1138,43 @@ p {
 .specials-today-card,
 .specials-happy-hour-card {
   padding: clamp(16px, 2vw, 24px);
+}
+
+.specials-takeaway-card {
+  overflow: hidden;
+}
+
+.specials-takeaway-image {
+  display: block;
+  width: 100%;
+  height: clamp(145px, 15vw, 190px);
+  object-fit: cover;
+}
+
+.specials-takeaway-content {
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.specials-takeaway-offer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+}
+
+.specials-takeaway-offer strong {
+  max-width: 18ch;
+  line-height: 1.35;
+}
+
+.specials-takeaway-offer span {
+  color: var(--harvard-orange-dark);
+  font-size: clamp(1.55rem, 2.6vw, 2.15rem);
+  font-weight: 950;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .specials-card-head {
@@ -1340,6 +1400,57 @@ p {
 .gallery-grid figcaption span {
   color: var(--harvard-blue);
   font-weight: 900;
+}
+
+.gallery-carousel-image {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  animation: gallery-image-in 320ms ease-out;
+}
+
+.gallery-carousel {
+  aspect-ratio: 16 / 9;
+}
+
+.gallery-carousel-dots button {
+  border: 2px solid var(--harvard-white);
+  background: rgba(0, 0, 0, 0.72);
+  color: var(--harvard-white);
+  cursor: pointer;
+}
+
+.gallery-carousel-dots {
+  position: absolute;
+  bottom: 72px;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  gap: 7px;
+  transform: translateX(-50%);
+}
+
+.gallery-carousel-dots button {
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.gallery-carousel-dots button.active {
+  background: var(--harvard-orange);
+}
+
+@keyframes gallery-image-in {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-carousel-image,
+  .feature-function-carousel > img {
+    animation: none;
+  }
 }
 
 .functions-feature {
@@ -1960,6 +2071,10 @@ p {
     grid-template-columns: 1fr;
   }
 
+  .specials-today-card {
+    grid-row: auto;
+  }
+
   .specials-week-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -1968,6 +2083,10 @@ p {
 @media (max-width: 768px) {
   .section {
     padding: 38px 16px;
+  }
+
+  .specials-week-wrap {
+    display: none;
   }
 
   .site-header {
@@ -2187,7 +2306,8 @@ p {
   .specials-section,
   .specials-layout,
   .specials-today-card,
-  .specials-happy-hour-card {
+  .specials-happy-hour-card,
+  .specials-takeaway-card {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -2239,7 +2359,28 @@ p {
     gap: 10px;
   }
 
+  .feature-grid {
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .feature-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .feature-grid .feature-card {
+    flex: 0 0 calc(100% - 22px);
+    scroll-snap-align: start;
+  }
+
   .image-feature-card > img,
+  .image-feature-card > video,
+  .feature-function-carousel,
   .menu-feature-image img,
   .section-image-card img {
     aspect-ratio: 16 / 10;
@@ -2490,6 +2631,16 @@ p {
     gap: 10px;
     padding-bottom: 0;
     font-size: 0.78rem;
+  }
+
+  .gallery-carousel-dots {
+    bottom: 52px;
+    gap: 5px;
+  }
+
+  .gallery-carousel-dots button {
+    width: 9px;
+    height: 9px;
   }
 
   .header-actions {
