@@ -1,13 +1,32 @@
 import { useState } from 'react'
 import { contactDetails } from '../data/contact'
 import nightGardenPoster from '../images/NightGarden.webp'
-import heroFlybyVideo from '../videos/flyby.mp4'
+import heroFlybyVideo from '../videos/HarvardFlyby-web.mp4'
 
 function Hero() {
   const [videoState, setVideoState] = useState('loading')
 
   const handleVideoReady = () => {
     setVideoState((currentState) => currentState === 'error' ? currentState : 'ready')
+  }
+
+  const handleVideoError = (event) => {
+    const video = event.currentTarget
+
+    if (video.error && video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+      setVideoState('error')
+    }
+  }
+
+  const handleSourceError = (event) => {
+    const failedSource = event.currentTarget.src
+    const video = event.currentTarget.parentElement
+
+    window.setTimeout(() => {
+      if (video?.currentSrc === failedSource && video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+        setVideoState('error')
+      }
+    }, 0)
   }
 
   return (
@@ -24,9 +43,9 @@ function Hero() {
           onLoadedData={handleVideoReady}
           onCanPlay={handleVideoReady}
           onPlaying={handleVideoReady}
-          onError={() => setVideoState('error')}
+          onError={handleVideoError}
         >
-          <source src={heroFlybyVideo} type="video/mp4" />
+          <source src={heroFlybyVideo} type="video/mp4" onError={handleSourceError} />
         </video>
         {videoState === 'error' ? (
           <img
