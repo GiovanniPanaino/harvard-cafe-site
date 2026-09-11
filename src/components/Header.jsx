@@ -16,7 +16,7 @@ function Header({ compact = false }) {
       style={{ '--header-banner-image': `url(${headerBanner})` }}
     >
       <a className="brand" href="#/" aria-label="The Harvard Café home">
-        <img src={logoElipse} alt="The Harvard Café logo" className="brand-logo" />
+        <img src={logoElipse} alt="The Harvard Café logo" className="brand-logo" fetchPriority="high" />
       </a>
       <nav className="main-nav" aria-label="Main navigation">
         {links.map(([label, href]) => (

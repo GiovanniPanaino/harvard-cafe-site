@@ -38,7 +38,8 @@ function Hero() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          poster={nightGardenPoster}
           aria-hidden="true"
           onLoadedData={handleVideoReady}
           onCanPlay={handleVideoReady}
