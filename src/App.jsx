@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import AdminDashboard from './admin/AdminDashboard'
-import AdminLogin from './admin/AdminLogin'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import FunctionsSection from './components/FunctionsSection'
@@ -69,17 +67,6 @@ function PublicSite({ menuOnly = false }) {
 
 function App() {
   const route = useHashRoute()
-  const isAdminRoute = window.location.pathname.replace(/\/$/, '') === '/admin' || route === '#/admin'
-  const [adminUnlocked, setAdminUnlocked] = useState(() => sessionStorage.getItem('harvard_gallery_access') === 'true')
-
-  if (isAdminRoute) {
-    return adminUnlocked ? (
-      <AdminDashboard onLogout={() => setAdminUnlocked(false)} />
-    ) : (
-      <AdminLogin onLogin={() => setAdminUnlocked(true)} />
-    )
-  }
-
   if (route === '#/order' || route === '#/menu') {
     return <PublicSite menuOnly />
   }

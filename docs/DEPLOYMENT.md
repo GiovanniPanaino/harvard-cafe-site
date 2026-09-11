@@ -54,13 +54,3 @@ VITE_API_BASE=https://example.com/api
 ```
 
 Then rebuild the frontend.
-
-## Admin route
-
-The hidden dashboard is available at:
-
-```text
-/admin
-```
-
-The current login is a placeholder local unlock and must be replaced with real authentication before launch.

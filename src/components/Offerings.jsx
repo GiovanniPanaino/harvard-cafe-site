@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import apronSideAtmosphere from '../images/ApronSideAtmosphere.mp4'
 import functionImageOne from '../images/Function10.webp'
 import functionImageTwo from '../images/Function15.webp'
@@ -18,49 +18,13 @@ const functionImages = [
 ]
 
 function Offerings() {
-  const trackRef = useRef(null)
-
-  useEffect(() => {
-    const mobileQuery = window.matchMedia('(max-width: 640px)')
-    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let timer
-    let currentIndex = 0
-
-    const stopAutoScroll = () => window.clearInterval(timer)
-    const startAutoScroll = () => {
-      stopAutoScroll()
-      if (!mobileQuery.matches || reducedMotionQuery.matches) return
-
-      timer = window.setInterval(() => {
-        const track = trackRef.current
-        if (!track) return
-
-        currentIndex = (currentIndex + 1) % offerings.length
-        const nextCard = track.children[currentIndex]
-        if (nextCard) {
-          track.scrollTo({ left: nextCard.offsetLeft - track.offsetLeft, behavior: 'smooth' })
-        }
-      }, 4000)
-    }
-
-    startAutoScroll()
-    mobileQuery.addEventListener('change', startAutoScroll)
-    reducedMotionQuery.addEventListener('change', startAutoScroll)
-
-    return () => {
-      stopAutoScroll()
-      mobileQuery.removeEventListener('change', startAutoScroll)
-      reducedMotionQuery.removeEventListener('change', startAutoScroll)
-    }
-  }, [])
-
   return (
     <section className="section" id="offerings" data-reveal="fade-up">
       <div className="section-heading">
         <p className="eyebrow">Why Visit Harvard Café</p>
         <h2>Food, flight and gathering in one memorable setting.</h2>
       </div>
-      <div className="feature-grid" ref={trackRef}>
+      <div className="feature-grid">
         {offerings.map(([title, mediaType, body]) => (
           <article className="feature-card image-feature-card" key={title} data-reveal-child>
             <OfferingMedia type={mediaType} />

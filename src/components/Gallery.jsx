@@ -4,7 +4,7 @@ import prawnsImage from '../images/Prawns.webp'
 import ribsImage from '../images/Ribs.webp'
 import seafoodComboImage from '../images/SeafoodCombo3.webp'
 import sushiImage from '../images/Sushi.webp'
-import { useGalleryImages } from '../utils/galleryStorage'
+import { defaultGalleryImages as galleryImages } from '../data/galleryImages'
 
 const foodCarouselImages = [
   { src: pizzaImage, alt: 'Freshly prepared pizza at The Harvard Café' },
@@ -15,8 +15,6 @@ const foodCarouselImages = [
 ]
 
 function Gallery() {
-  const galleryImages = useGalleryImages()
-
   return (
     <section className="section gallery-section" id="gallery" data-reveal="fade-up">
       <div className="section-heading">
@@ -85,10 +83,6 @@ function FoodCarousel() {
       data-reveal-child
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      onFocus={() => setIsPaused(true)}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false)
-      }}
       onTouchStart={(event) => {
         touchStartX.current = event.touches[0].clientX
       }}
@@ -101,18 +95,6 @@ function FoodCarousel() {
         alt={activeImage.alt}
         loading="lazy"
       />
-      <div className="gallery-carousel-dots" aria-label="Choose a food photo">
-        {foodCarouselImages.map((image, index) => (
-          <button
-            className={index === activeIndex ? 'active' : ''}
-            type="button"
-            key={image.src}
-            onClick={() => setActiveIndex(index)}
-            aria-label={`Show food photo ${index + 1} of ${foodCarouselImages.length}`}
-            aria-current={index === activeIndex ? 'true' : undefined}
-          />
-        ))}
-      </div>
       <figcaption>
         <strong>Food</strong>
         <span>From our kitchen</span>

@@ -34,8 +34,7 @@ function BookingForm() {
         <p className="eyebrow">Reserve Your Apron Seat</p>
         <h2>Booking requests land as pending until staff confirm.</h2>
         <p>
-          This MVP keeps reservations practical: customers request a table, and the Harvard Command Deck
-          lets staff accept, reject, or suggest a new time.
+          Request a table and our staff will follow up to confirm availability.
         </p>
       </div>
       <form className="form-card" onSubmit={handleSubmit}>

@@ -9,7 +9,6 @@ function Footer() {
         <a href={contactDetails.phoneSecondary.href}>{contactDetails.phoneSecondary.label}</a> -{' '}
         <a href={contactDetails.email.href}>{contactDetails.email.label}</a>
       </p>
-      <a href="#/admin">Harvard Command Deck</a>
     </footer>
   )
 }

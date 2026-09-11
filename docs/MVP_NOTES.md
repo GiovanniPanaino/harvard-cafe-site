@@ -9,9 +9,6 @@
 - Function enquiry form.
 - Daily specials section.
 - Gallery, history timeline, airshow/event mode, and contact placeholders.
-- Hidden `/admin` Harvard Command Deck dashboard.
-- Admin polling every 10 seconds for bookings and orders.
-- Staff status updates for orders and bookings.
 - Basic JSON PHP API using PDO and MySQL.
 - SQL schema and seed data for a practical cPanel deployment.
 
@@ -21,7 +18,6 @@
 - Menu names, prices, descriptions, specials, and function wording are placeholder content.
 - Contact details, WhatsApp number, address, opening hours, and social links are placeholders.
 - Rand Airport history copy is intentionally marked as unverified placeholder text.
-- Admin login is a local-state placeholder only.
 
 ## Must be verified before client launch
 
@@ -35,14 +31,9 @@
 
 ## Recommended future improvements
 
-- Proper admin login with password hashing, sessions, roles, and CSRF protection.
 - WhatsApp integration for confirmations and customer updates.
 - Online payments for deposits, vouchers, and pre-orders.
-- WebSocket or push notifications instead of 10-second polling.
 - Full airshow mode with capacity controls, special menus, platters, VIP seating, and timed pre-orders.
 - Gift vouchers.
 - Runway Club loyalty programme.
-- Menu manager CRUD.
-- Gallery upload manager.
-- Reports for revenue, order status, booking conversion, and popular menu items.
 - Email notifications for bookings and function enquiries.
