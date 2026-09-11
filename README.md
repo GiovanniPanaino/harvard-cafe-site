@@ -1,16 +1,41 @@
-# React + Vite
+# The Harvard Caf?
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive brochure site for The Harvard Caf? at Rand Airport, built with React and Vite.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Use a Node.js version supported by the installed Vite release (Node 22.12+ recommended).
 
-## React Compiler
+```sh
+npm install
+npm run dev
+npm run lint
+npm run build
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Vite serves the demo at `/harvard-cafe-site/`. Production build output is in `dist/`.
 
-## Expanding the ESLint configuration
+```sh
+npm run deploy
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This explicitly publishes `dist/` to the GitHub Pages branch; its predeploy script builds first. See [deployment notes](docs/DEPLOYMENT.md). The Vite base is `/harvard-cafe-site/` and must remain unchanged for this demo.
+
+## Site sections
+
+Header/navigation, hero video, quick contact links, Why Visit cards, category menu previews and accessible modal, daily specials and cocktail happy hour, gallery with Food carousel, functions/events enquiries, airport history, contact details, trading hours and map.
+
+Section navigation uses anchor hashes. `#/menu` retains the compact menu page for existing links; `#/` shows the full site.
+
+## Content and media
+
+- Menu category navigation: `src/data/menuPreview.js`.
+- Menu descriptions, prices, options and eligibility tags: `src/data/menuSnippets.js`.
+- Contact details and trading hours: `src/data/contact.js`.
+- Special definitions: `src/data/dailySpecials.js`; calculations: `src/utils/menuPricing.js`; Johannesburg timing: `src/utils/specialsDate.js`. The take-away offer is rendered in `src/components/SpecialsSection.jsx`.
+- Shared image mapping: `src/data/imageMap.js`; gallery entries: `src/data/galleryImages.js`. Carousel image lists live in their components.
+- Styling and responsive rules: `src/styles/global.css`.
+
+Import site images from `src/images` so Vite fingerprints them and respects the base path. Keep optimized WebP photos and only referenced media; do not store editing backups or duplicate originals in the application. Public files are copied verbatim into `dist/`; use `%BASE_URL%` in HTML for public asset links. See [media conventions](docs/IMAGE_USAGE.md).
+
+Static search/social metadata lives in `index.html`. The canonical production URL is `https://cafeharvard.co.za/`; check the production hosting path and metadata when preparing a production release.

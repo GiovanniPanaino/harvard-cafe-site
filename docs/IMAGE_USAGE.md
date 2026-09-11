@@ -1,62 +1,15 @@
-# Image Usage
+# Media conventions
 
-## Storage location
+Import runtime images from `src/images` in JSX or data modules. Vite resolves, fingerprints and prefixes imported URLs for the demo base. Shared mappings live in `src/data/imageMap.js` and `src/data/galleryImages.js`; components also import their own photos.
 
-The source image pack currently found in this workspace lives in:
+Keep the active videos:
 
-```text
-src/images/00_web_ready/
-```
+- `src/videos/HarvardFlyby-web.mp4`: hero.
+- `src/videos/FoodAndDrinks.mp4`: Why Visit food card.
+- `src/images/ApronSideAtmosphere.mp4`: Why Visit apron card.
 
-If a future pack is added at `src/images/web-ready/`, copy the web-ready image files into the public folder below before using them in the React site.
+The hero retains its immediate loading and poster. Why Visit attaches video sources within 200px of the section, plays both together, and pauses them when substantially offscreen or the document is hidden. Reduced-motion preferences suppress their playback. The Functions card and Food gallery have independent 2000ms carousel timers.
 
-All images that the website serves in Vite must live in:
+Use optimized WebP photos. Keep originals, alternate encodes and editing backups outside the application repository. Before deleting any media, scan imports, CSS URLs, HTML, data modules and documentation; resolve full paths to distinguish duplicate filenames. Preserve every referenced image, including existing filenames containing `placeholder`.
 
-```text
-public/assets/images/
-```
-
-The current React image mapping is defined in:
-
-```text
-src/data/imageMap.js
-```
-
-## Public image paths in Vite
-
-Files placed inside `public/` are served from the site root. Do not import these images through JavaScript.
-
-Use paths like:
-
-```js
-"/assets/images/hero_rand_airport_northwest_apron.webp"
-```
-
-This works in local Vite development and after the production build is uploaded to cPanel.
-
-## Current image mapping
-
-- Hero: `hero_rand_airport_northwest_apron.webp`
-- Offerings: breakfast, burgers, coffee, shared table food, Harvard aircraft, and function table images.
-- Menu: breakfast, burgers, steak, fish and chips, and coffee images assigned by item type.
-- Daily specials: breakfast, burger, steak, and table food images.
-- Functions: `function_elegant_dinner_table_placeholder.webp`
-- Gallery: mixed food, aircraft, apron, event, Rand Airport, and aviation heritage placeholders.
-- Rand Airport History: `rand_airport_sign_biplane.webp`
-- Airshow / Events: `saaf_harvard_trainer_7024.webp`
-- Contact / Location: `rand_airport_control_tower_landside.webp`
-
-## Placeholder status
-
-The current filenames are wired into the MVP, but final launch assets should replace them with official or approved photography:
-
-- Harvard Cafe logo and official brand artwork.
-- Real menu item photos.
-- Apron seating and aircraft atmosphere photos.
-- Restaurant interior and exterior photos.
-- Rand Airport / SAA Museum / aviation heritage imagery with verified rights.
-- Event and function photos from approved sources.
-
-## Licence and source notes
-
-Keep licence, source, photographer, and usage notes from the image pack with the project. Before launch, confirm that every image is original, licensed, client-approved, or otherwise safe to publish.
+`public/favicon.svg` is the active favicon. `public/social-preview.webp` is a deliberate copy of the existing NightGarden photograph for a stable social metadata URL. Other site photos belong in `src/images`; `public/` is copied in full to the build. Keep image source/licence information alongside any future approved media additions.

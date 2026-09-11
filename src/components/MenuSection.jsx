@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { imageMap } from '../data/imageMap'
 import { menuPreviewCategories } from '../data/menuPreview'
 import { getMenuSnippet } from '../data/menuSnippets'
@@ -6,6 +7,8 @@ import { getMenuSnippet } from '../data/menuSnippets'
 function MenuSection({ standalone = false }) {
   const [activeCategoryId, setActiveCategoryId] = useState(menuPreviewCategories[0].id)
   const [modalCategoryId, setModalCategoryId] = useState(null)
+  const dialogRef = useRef(null)
+  const closeButtonRef = useRef(null)
   const previewScrollRef = useRef(null)
   const modalContentRef = useRef(null)
   const modalScrollRef = useRef(null)
@@ -34,14 +37,55 @@ function MenuSection({ standalone = false }) {
       return undefined
     }
 
+    const opener = document.activeElement
+    const background = [...document.body.children].filter((element) => element !== dialogRef.current)
+    const previousInert = background.map((element) => element.inert)
+    const previousRootOverflow = document.documentElement.style.overflow
+    const previousOverflow = document.body.style.overflow
+    const previousPadding = document.body.style.paddingRight
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${parseFloat(getComputedStyle(document.body).paddingRight) + scrollbarWidth}px`
+    }
+    document.documentElement.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
+    background.forEach((element) => { element.inert = true })
+    closeButtonRef.current.focus({ preventScroll: true })
+
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
+        event.preventDefault()
         setModalCategoryId(null)
       }
+      if (event.key === 'Tab') {
+        const focusable = [...dialogRef.current.querySelectorAll(
+          'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]',
+        )].filter((element) => element.getClientRects().length > 0)
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first.focus()
+        }
+      }
     }
-
+    const containFocus = (event) => {
+      if (!dialogRef.current.contains(event.target)) closeButtonRef.current.focus()
+    }
     document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
+    document.addEventListener('focusin', containFocus)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('focusin', containFocus)
+      background.forEach((element, index) => { element.inert = previousInert[index] })
+      document.documentElement.style.overflow = previousRootOverflow
+      document.body.style.overflow = previousOverflow
+      document.body.style.paddingRight = previousPadding
+      if (opener?.isConnected) opener.focus({ preventScroll: true })
+    }
   }, [modalSnippet])
 
   function openMenuModal(categoryId = activeCategoryId) {
@@ -71,24 +115,6 @@ function MenuSection({ standalone = false }) {
               </button>
             ))}
           </div>
-          {/* Mobile uses a dropdown because the Harvard Cafe menu contains many categories. */}
-          <div className="menu-mobile-select-wrap" data-reveal-child>
-            <label className="menu-mobile-select-label" htmlFor="menu-category-select">
-              Choose menu section
-            </label>
-            <select
-              id="menu-category-select"
-              className="menu-mobile-select"
-              value={activeCategoryId}
-              onChange={(event) => setActiveCategoryId(event.target.value)}
-            >
-              {menuPreviewCategories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
           {selectedCategory && (
             <div className="menu-preview-panel" data-reveal-child aria-live="polite">
               <div className="menu-preview-header">
@@ -115,17 +141,19 @@ function MenuSection({ standalone = false }) {
         </figure>
       </section>
 
-      {modalSnippet ? (
+      {modalSnippet ? createPortal(
         <div
           className="menu-modal-backdrop"
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
-          aria-label={`${modalSnippet.title} menu`}
+          aria-labelledby="menu-modal-heading"
           onClick={() => setModalCategoryId(null)}
         >
           <div className="menu-modal" onClick={(event) => event.stopPropagation()}>
             <button
               className="menu-modal-close"
+              ref={closeButtonRef}
               type="button"
               aria-label="Close menu preview"
               onClick={() => setModalCategoryId(null)}
@@ -135,14 +163,15 @@ function MenuSection({ standalone = false }) {
             <div className="menu-modal-content" ref={modalContentRef}>
               <div className="menu-modal-head">
                 <span>Menu</span>
-                <h2>{modalSnippet.title}</h2>
+                <h2 id="menu-modal-heading">{modalSnippet.title}</h2>
               </div>
               <div className="menu-modal-scroll" ref={modalScrollRef}>
                 <MenuSnippet snippet={modalSnippet} />
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </>
   )

@@ -1,56 +1,14 @@
-# The Harvard Cafe MVP Deployment
+# Deployment
 
-## Run the frontend locally
+The Harvard Caf? is a static React/Vite site.
 
-1. Install dependencies if needed:
-   ```bash
-   npm install
-   ```
-2. Start Vite:
-   ```bash
-   npm run dev
-   ```
-3. Open the local URL Vite prints, usually `http://localhost:5173`.
+1. Run `npm install` (or `npm ci` for a reproducible lockfile install).
+2. Run `npm run lint` and `npm run build`.
+3. Inspect `dist/` with `npm run preview` at `/harvard-cafe-site/`.
+4. When publication is intended, run `npm run deploy`. This runs the build and publishes `dist/` using `gh-pages`. Configure GitHub Pages to serve that branch.
 
-The frontend uses `VITE_API_BASE` when provided. Without it, API requests go to `/api`.
+Keep `base: '/harvard-cafe-site/'` in `vite.config.js` for the GitHub Pages demo. Import source media through Vite and use base-aware public asset links. Hash navigation, including `#/menu`, requires no server-side route handling.
 
-## Build the frontend
+The canonical and social URLs target `https://cafeharvard.co.za/`. They identify the intended production site, rather than the demo. The current build expects assets under `/harvard-cafe-site/`; a production host must serve that asset path as well as the root page. Check those paths before a separate production release. The social preview uses the existing NightGarden image copied to `public/social-preview.webp` for a stable URL.
 
-```bash
-npm run build
-```
-
-Vite will create a `dist/` folder.
-
-## Upload to cPanel
-
-1. Upload the contents of `dist/` into the public web root, usually `public_html/`.
-2. Upload the PHP `api/` folder into `public_html/api/`.
-3. Make sure `public_html/api/config.php` contains the production database credentials.
-4. Upload real image assets into `public_html/assets/images/` using the placeholder filenames referenced by the React app.
-
-## Database setup
-
-1. In cPanel, create a MySQL database.
-2. Create a MySQL user and assign it to the database with the needed privileges.
-3. Import `database/schema.sql` using phpMyAdmin or the cPanel MySQL tools.
-4. Import `database/seed.sql` after the schema is created.
-5. Edit `api/config.php`:
-   ```php
-   define('DB_HOST', 'localhost');
-   define('DB_NAME', 'your_database_name');
-   define('DB_USER', 'your_database_user');
-   define('DB_PASS', 'your_database_password');
-   ```
-
-## API base configuration
-
-For normal cPanel deployment where the site and API share the same domain, leave the frontend default as `/api`.
-
-For a separate API domain during local testing, create a `.env` file:
-
-```bash
-VITE_API_BASE=https://example.com/api
-```
-
-Then rebuild the frontend.
+Contact information and structured data must stay synchronized with `src/data/contact.js`. No publication occurs during local lint/build checks.

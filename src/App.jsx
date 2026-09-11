@@ -67,7 +67,7 @@ function PublicSite({ menuOnly = false }) {
 
 function App() {
   const route = useHashRoute()
-  if (route === '#/order' || route === '#/menu') {
+  if (route === '#/menu') {
     return <PublicSite menuOnly />
   }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import apronSideAtmosphere from '../images/ApronSideAtmosphere.mp4'
 import functionImageOne from '../images/Function10.webp'
 import functionImageTwo from '../images/Function15.webp'
@@ -18,8 +18,46 @@ const functionImages = [
 ]
 
 function Offerings() {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const videos = [...sectionRef.current.querySelectorAll('video')]
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let nearby = false
+    const updatePlayback = () => {
+      for (const video of videos) {
+        if (nearby && !document.hidden) {
+          if (!video.getAttribute('src')) {
+            video.src = video.dataset.src
+            video.load()
+          }
+          if (!motion.matches) {
+            video.play().catch(() => { /* Autoplay may be blocked by the browser. */ })
+          } else {
+            video.pause()
+          }
+        } else {
+          video.pause()
+        }
+      }
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      nearby = entry.isIntersecting
+      updatePlayback()
+    }, { rootMargin: '200px 0px' })
+    observer.observe(sectionRef.current)
+    motion.addEventListener('change', updatePlayback)
+    document.addEventListener('visibilitychange', updatePlayback)
+    return () => {
+      observer.disconnect()
+      motion.removeEventListener('change', updatePlayback)
+      document.removeEventListener('visibilitychange', updatePlayback)
+      videos.forEach((video) => video.pause())
+    }
+  }, [])
+
   return (
-    <section className="section" id="offerings" data-reveal="fade-up">
+    <section className="section" id="offerings" ref={sectionRef} data-reveal="fade-up">
       <div className="section-heading">
         <p className="eyebrow">Why Visit Harvard Café</p>
         <h2>Food, flight and gathering in one memorable setting.</h2>
@@ -46,13 +84,12 @@ function OfferingMedia({ type }) {
 
     return (
       <video
-        src={isApronVideo ? apronSideAtmosphere : foodAndDrinks}
+        data-src={isApronVideo ? apronSideAtmosphere : foodAndDrinks}
         aria-label={isApronVideo ? 'Apron-side atmosphere at The Harvard Café' : 'Food and drinks at The Harvard Café'}
-        autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
       />
     )
   }
