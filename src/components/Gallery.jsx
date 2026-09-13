@@ -6,7 +6,7 @@ import prawnsImage from '../images/Prawns.webp'
 import ribsImage from '../images/Ribs.webp'
 import seafoodComboImage from '../images/SeafoodCombo3.webp'
 import sushiImage from '../images/Sushi.webp'
-import { atmosphereCarouselImages, aviationCarouselImages, defaultGalleryImages as galleryImages } from '../data/galleryImages'
+import { aviationCarouselImages, defaultGalleryImages as galleryImages } from '../data/galleryImages'
 
 const foodCarouselImages = [
   { src: pizzaImage, alt: 'Freshly prepared pizza at The Harvard Café' },
@@ -29,16 +29,13 @@ function Gallery() {
             <FoodCarousel key={item.id} />
           ) : item.id === 'gallery-6' ? (
             <FunctionsGalleryCarousel key={item.id} />
-          ) : item.id === 'gallery-9' ? (
-            <AutomaticGalleryCarousel key={item.id} images={atmosphereCarouselImages} title="Garden & Bar Atmosphere" className="gallery-atmosphere-carousel" />
           ) : item.id === 'gallery-10' ? (
-            <AutomaticGalleryCarousel key={item.id} images={aviationCarouselImages} title="Aviation Heritage" className="gallery-aviation-carousel" />
+            <AutomaticGalleryCarousel key={item.id} images={aviationCarouselImages} title="Aviation Heritage" className="gallery-card" startOffset={2400} />
           ) : (
-            <figure key={item.id} data-reveal-child>
+            <figure key={item.id} className={`gallery-card${item.size === 'wide' ? ' gallery-card-wide' : ''}`} data-reveal-child>
               <img src={item.src} alt={item.alt} loading="lazy" />
               <figcaption>
                 <strong>{item.title}</strong>
-                <span>{item.category}</span>
               </figcaption>
             </figure>
           ),
@@ -66,10 +63,10 @@ function shuffleImages(sourceImages, previousImage) {
 }
 
 function FunctionsGalleryCarousel() {
-  return <AutomaticGalleryCarousel images={functionCarouselImages} title="Functions at The Harvard Café" className="gallery-functions-carousel" />
+  return <AutomaticGalleryCarousel images={functionCarouselImages} title="Functions at The Harvard Café" className="gallery-card gallery-card-wide" startOffset={1200} />
 }
 
-function AutomaticGalleryCarousel({ images, title, className }) {
+function AutomaticGalleryCarousel({ images, title, className, startOffset }) {
   const [order] = useState(() => shuffleImages(images))
   const [activeImage, setActiveImage] = useState(order[0])
 
@@ -78,27 +75,34 @@ function AutomaticGalleryCarousel({ images, title, className }) {
     let cycle = order
     let index = 0
     let timer
+    let startTimer
 
     const updateTimer = () => {
       window.clearInterval(timer)
+      window.clearTimeout(startTimer)
       if (motion.matches) return
-      timer = window.setInterval(() => {
+      const advance = () => {
         index += 1
         if (index === cycle.length) {
           cycle = shuffleImages(images, cycle[cycle.length - 1].src)
           index = 0
         }
         setActiveImage(cycle[index])
-      }, 2000)
+      }
+      startTimer = window.setTimeout(() => {
+        advance()
+        timer = window.setInterval(advance, 4500)
+      }, 4500 + startOffset)
     }
 
     updateTimer()
     motion.addEventListener('change', updateTimer)
     return () => {
       window.clearInterval(timer)
+      window.clearTimeout(startTimer)
       motion.removeEventListener('change', updateTimer)
     }
-  }, [images, order])
+  }, [images, order, startOffset])
 
   return (
     <figure className={className} data-reveal-child>
@@ -121,7 +125,7 @@ function FoodCarousel() {
 
     const timer = window.setTimeout(() => {
       setActiveIndex((current) => (current + 1) % foodCarouselImages.length)
-    }, 2000)
+    }, 4500)
 
     return () => window.clearTimeout(timer)
   }, [activeIndex, isPaused])
@@ -149,7 +153,7 @@ function FoodCarousel() {
 
   return (
     <figure
-      className="gallery-carousel"
+      className="gallery-card gallery-card-wide gallery-food"
       data-reveal-child
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
