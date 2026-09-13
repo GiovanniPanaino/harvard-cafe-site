@@ -1,13 +1,12 @@
+import outsideBarImage from '../images/OutsideBar.webp'
+import outsideBarTwoImage from '../images/OutsideBar2.webp'
+import nightGardenImage from '../images/NightGarden.webp'
 import aerialViewImage from '../images/AerialView.webp'
-import breakfastPlateImage from '../images/breakfast_plate_placeholder.webp'
 import coffeeImage from '../images/coffee_latte_art_placeholder.webp'
-import controlTowerAirsideImage from '../images/rand_airport_control_tower_airside.webp'
-import functionsTableImage from '../images/function_elegant_dinner_table_placeholder.webp'
+import functionsTableImage from '../images/Function10.webp'
 import gardenDiningImage from '../images/GardenDining.webp'
 import harvardPlaneImage from '../images/HrvardPlane.webp'
-import heroObservationDeckImage from '../images/hero_rand_airport_observation_deck.webp'
 import northAmericanHarvardImage from '../images/north_american_harvard_iia_7111.webp'
-import randAirportFoyerImage from '../images/rand_airport_foyer.webp'
 import saaMuseumImage from '../images/saa_museum_boeing_747_lebombo.webp'
 import pizzaImage from '../images/Pizza2.webp'
 
@@ -20,60 +19,18 @@ export const defaultGalleryImages = [
     category: 'Food',
   },
   {
-    id: 'gallery-2',
-    src: breakfastPlateImage,
-    alt: 'Breakfast plate served at The Harvard Café',
-    title: 'Breakfast',
-    category: 'Food',
-  },
-  {
-    id: 'gallery-3',
-    src: coffeeImage,
-    alt: 'Coffee served for cafe visitors',
-    title: 'Coffee',
-    category: 'Venue',
-  },
-  {
-    id: 'gallery-4',
-    src: northAmericanHarvardImage,
-    alt: 'North American Harvard aircraft at Rand Airport',
-    title: 'Harvard Aircraft',
-    category: 'Aircraft',
-  },
-  {
-    id: 'gallery-5',
-    src: heroObservationDeckImage,
-    alt: 'Observation deck view over Rand Airport',
-    title: 'Apron View',
-    category: 'Apron',
-  },
-  {
     id: 'gallery-6',
     src: functionsTableImage,
-    alt: 'Elegant function dinner table setup',
+    alt: 'Function tables with flowers and green runners beside the apron',
     title: 'Functions',
     category: 'Events',
   },
   {
-    id: 'gallery-7',
-    src: harvardPlaneImage,
-    alt: 'Aircraft atmosphere near the Harvard Café at Rand Airport',
-    title: 'Aircraft',
-    category: 'Aircraft',
-  },
-  {
-    id: 'gallery-8',
-    src: aerialViewImage,
-    alt: 'Apron-side restaurant atmosphere at Rand Airport',
-    title: 'Apron Energy',
-    category: 'Apron View',
-  },
-  {
     id: 'gallery-9',
-    src: controlTowerAirsideImage,
-    alt: 'Rand Airport control tower from the airside',
-    title: 'Rand Airport',
-    category: 'Location',
+    src: outsideBarImage,
+    alt: 'Bar counter and beer taps overlooking the apron',
+    title: 'Garden & Bar Atmosphere',
+    category: 'Venue',
   },
   {
     id: 'gallery-10',
@@ -83,17 +40,24 @@ export const defaultGalleryImages = [
     category: 'History',
   },
   {
-    id: 'gallery-11',
-    src: gardenDiningImage,
-    alt: 'Event atmosphere at The Harvard Café',
-    title: 'Event Days',
-    category: 'Events',
-  },
-  {
-    id: 'gallery-12',
-    src: randAirportFoyerImage,
-    alt: 'Rand Airport venue detail and aviation atmosphere',
-    title: 'Venue',
+    id: 'gallery-3',
+    src: coffeeImage,
+    alt: 'Coffee served for cafe visitors',
+    title: 'Coffee',
     category: 'Venue',
   },
+]
+
+export const aviationCarouselImages = [
+  { src: harvardPlaneImage, alt: 'Harvard aircraft at Rand Airport' },
+  { src: northAmericanHarvardImage, alt: 'North American Harvard IIA aircraft at Rand Airport' },
+  { src: aerialViewImage, alt: 'Aerial view of the Rand Airport apron' },
+  { src: saaMuseumImage, alt: 'SAA Museum Boeing 747 Lebombo aircraft' },
+]
+
+export const atmosphereCarouselImages = [
+  { src: outsideBarImage, alt: 'Outside bar counter and beer taps at The Harvard Café' },
+  { src: outsideBarTwoImage, alt: 'Outside bar and drinks area at The Harvard Café' },
+  { src: gardenDiningImage, alt: 'Guests enjoying garden dining at The Harvard Café' },
+  { src: nightGardenImage, alt: 'Evening garden atmosphere at The Harvard Café' },
 ]

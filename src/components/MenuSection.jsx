@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { imageMap } from '../data/imageMap'
 import { menuPreviewCategories } from '../data/menuPreview'
 import { getMenuSnippet } from '../data/menuSnippets'
 
@@ -109,7 +108,22 @@ function MenuSection({ standalone = false }) {
                 key={category.id}
                 type="button"
                 aria-pressed={category.id === activeCategoryId}
-                onClick={() => setActiveCategoryId(category.id)}
+                onClick={(event) => {
+                  setActiveCategoryId(category.id)
+                  if (window.matchMedia('(max-width: 640px)').matches) {
+                    const pill = event.currentTarget
+                    const strip = pill.parentElement
+                    const bounds = pill.getBoundingClientRect()
+                    const viewport = strip.getBoundingClientRect()
+                    const offset = bounds.left < viewport.left + 4
+                      ? bounds.left - viewport.left - 4
+                      : Math.max(0, bounds.right - viewport.right + 8)
+                    strip.scrollBy({
+                      left: offset,
+                      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+                    })
+                  }
+                }}
               >
                 {category.name}
               </button>
@@ -130,15 +144,12 @@ function MenuSection({ standalone = false }) {
               </div>
               <div className="menu-preview-actions">
                 <button className="btn btn-primary" type="button" onClick={() => openMenuModal()}>
-                  Open Menu Preview
+                  View Full Category
                 </button>
               </div>
             </div>
           )}
         </div>
-        <figure className="menu-feature-image" data-reveal-child>
-          <img src={imageMap.menuFeature.src} alt={imageMap.menuFeature.alt} loading={standalone ? 'eager' : 'lazy'} />
-        </figure>
       </section>
 
       {modalSnippet ? createPortal(
@@ -178,9 +189,15 @@ function MenuSection({ standalone = false }) {
 }
 
 function MenuPreviewSnippet({ snippet }) {
+  const previewSections = snippet.sections.map((section, index) => {
+    const precedingCount = snippet.sections.slice(0, index)
+      .reduce((total, previous) => total + previous.items.length, 0)
+    return { ...section, items: section.items.slice(0, Math.max(0, 5 - precedingCount)) }
+  }).filter((section) => section.items.length > 0)
+
   return (
     <div className="menu-preview-list">
-      {snippet.sections.filter((section) => section.items.length > 0).map((section) => (
+      {previewSections.map((section) => (
         <section className="menu-preview-section" key={section.heading}>
           <h3 className="menu-preview-section-heading">{section.heading}</h3>
           <div className="menu-preview-rows">

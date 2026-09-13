@@ -1,30 +1,19 @@
-import nightGardenHero from '../images/NightGarden.webp'
 import outsideBarAtmosphereImage from '../images/OutsideBar.webp'
 import outsideBarImage from '../images/OutsideBar2.webp'
 import harvardPlaneImage from '../images/HrvardPlane.webp'
-import breakfastPlateImage from '../images/breakfast_plate_placeholder.webp'
 import burgersImage from '../images/burgers_and_fries_placeholder.webp'
 import coffeeImage from '../images/coffee_latte_art_placeholder.webp'
 import fishImage from '../images/fish_and_chips_placeholder.webp'
-import functionsTableImage from '../images/function_elegant_dinner_table_placeholder.webp'
+import functionsTableImage from '../images/Function10.webp'
 import northAmericanHarvardImage from '../images/north_american_harvard_iia_7111.webp'
 import pizzaImage from '../images/pizza_placeholder.webp'
 import controlTowerLandsideImage from '../images/rand_airport_control_tower_landside.webp'
 import randAirportSignImage from '../images/rand_airport_sign_biplane.webp'
 import steakImage from '../images/steak_dinner_placeholder.webp'
-import tableFoodImage from '../images/table_with_food_placeholder.webp'
 import { defaultGalleryImages } from './galleryImages'
 
 export const imageMap = {
-  hero: {
-    src: nightGardenHero,
-    alt: 'Harvard Café night garden atmosphere',
-  },
   offerings: {
-    breakfast: {
-      src: breakfastPlateImage,
-      alt: 'Breakfast plate served at an aviation-themed restaurant',
-    },
     burgers: {
       src: outsideBarImage,
       alt: 'Harvard Café outside bar and drinks area',
@@ -32,10 +21,6 @@ export const imageMap = {
     coffee: {
       src: coffeeImage,
       alt: 'Fresh coffee with latte art for cafe guests',
-    },
-    family: {
-      src: tableFoodImage,
-      alt: 'Shared family meal on a restaurant table',
     },
     aviation: {
       src: northAmericanHarvardImage,
@@ -51,23 +36,17 @@ export const imageMap = {
     },
     functions: {
       src: functionsTableImage,
-      alt: 'Elegant dinner table setup for a restaurant function',
+      alt: 'Function tables with flowers and green runners beside the apron',
     },
   },
   menu: {
-    breakfast: breakfastPlateImage,
     burger: burgersImage,
     steak: steakImage,
     coffee: coffeeImage,
     fish: fishImage,
     pizza: pizzaImage,
-    function: tableFoodImage,
   },
   specials: [
-    {
-      src: breakfastPlateImage,
-      alt: 'Breakfast special at The Harvard Café',
-    },
     {
       src: burgersImage,
       alt: 'Burger special with fries',
@@ -76,18 +55,10 @@ export const imageMap = {
       src: steakImage,
       alt: 'Grilled steak lunch special',
     },
-    {
-      src: tableFoodImage,
-      alt: 'Family platter special for sharing',
-    },
   ],
-  menuFeature: {
-    src: tableFoodImage,
-    alt: 'A Harvard Café table set with food and drinks before a visit',
-  },
   functions: {
     src: functionsTableImage,
-    alt: 'Elegant restaurant function setup for private and club events',
+    alt: 'Function tables with flowers and green runners beside the apron',
   },
   history: {
     src: randAirportSignImage,
